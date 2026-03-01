@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -38,9 +39,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import edu.unicauca.aplimovil.ufriendly.ui.components.BottomBar
 import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
 
 class MainActivity : ComponentActivity() {
@@ -64,46 +67,30 @@ fun MateriasScreen(){
     var presses by remember { mutableIntStateOf(0) }
     var searchText by remember { mutableStateOf("") }
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.primaryContainer,
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.secondary
+                    titleContentColor = MaterialTheme.colorScheme.surfaceContainerLowest
                 ),
                 title = {
                     Text(
                         modifier = Modifier
                             .fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        text = "Materias"
+                        text = stringResource(R.string.subject_label)
                     )
                 }
             )
         },
-        bottomBar = {
-            BottomAppBar(
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.secondary,
-            ) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    text = "Espacio para iconos",
-                )
-            }
-        },
+        bottomBar = { BottomBar()},
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = { presses++ },
-                shape = CircleShape,
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.secondary
-                ) {
+            FloatingActionButton(onClick = { }, shape = MaterialTheme.shapes.extraLarge, containerColor = MaterialTheme.colorScheme.tertiaryContainer) {
                 Icon(
-                    Icons.Default.Add,
-                    contentDescription = "Add"
-                    )
+                    imageVector = Icons.Rounded.Add,
+                    contentDescription = "Add new entry"
+                )
             }
         }
     ) { innerPadding ->
@@ -119,19 +106,18 @@ fun MateriasScreen(){
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                placeholder = { Text("Buscar materia...") },
+                placeholder = { Text(stringResource(R.string.search_subject_label)) },
                 leadingIcon = {
                     Icon(Icons.Default.Search, contentDescription = null)
                 },
                 singleLine = true,
                 shape = RoundedCornerShape(24.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = MaterialTheme.colorScheme.secondary,
-                    unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                    focusedContainerColor = MaterialTheme.colorScheme.surfaceContainer,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
 
                 )
             )
-
             //Botones cursado/cursando
             Row(
                 modifier = Modifier
@@ -143,8 +129,8 @@ fun MateriasScreen(){
                 Button(
                     onClick = { },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.secondary,
-                        contentColor = MaterialTheme.colorScheme.tertiary
+                        containerColor = MaterialTheme.colorScheme.tertiary,
+                        contentColor = MaterialTheme.colorScheme.onTertiary
                     ),
                     modifier = Modifier.padding(end = 8.dp)
                 ) {
@@ -154,8 +140,8 @@ fun MateriasScreen(){
                 Button(
                     onClick = { },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.secondary,
-                        contentColor = MaterialTheme.colorScheme.tertiary
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onTertiaryContainer
                     ),
                     modifier = Modifier.padding(start = 8.dp)
                 ) {
@@ -179,7 +165,6 @@ fun MateriasScreen(){
 fun MateriasScreenPreview() {
     //MateriasScreen()
     UFriendlyTheme(
-        dynamicColor = false
     ) {
         MateriasScreen()
     }

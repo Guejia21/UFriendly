@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UFriendly</string>
+    <string name="task_summary_label">Resumen de tareas</string>
+    <string name="button_label">Ver todas</string>
+    <string name="subject_label">Materias</string>
+    <string name="home_button_label">Home</string>
+    <string name="task_label">Tareas</string>
+    <string name="grades_label">Calificaciones</string>
+    <string name="pending_task">Pendiente</string>
+    <string name="done_label_task">Hecho</string>
+    <string name="expired_task_label">Vencida</string>
+    <string name="search_subject_label">Buscar materia</string>
+</resources>
