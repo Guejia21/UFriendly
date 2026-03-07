@@ -59,7 +59,7 @@ fun ColorSelector(
             color = MaterialTheme.colorScheme.primary,
             fontWeight = FontWeight.Bold
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(15.dp))
 
         Row(horizontalArrangement = Arrangement.spacedBy(40.dp)) {
             firstRow.forEach { color ->
@@ -70,7 +70,7 @@ fun ColorSelector(
                 )
             }
         }
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(30.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(40.dp)) {
             secondRow.forEach { color ->
                 ColorCircle(

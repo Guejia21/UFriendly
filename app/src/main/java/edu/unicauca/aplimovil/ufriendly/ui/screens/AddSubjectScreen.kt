@@ -1,5 +1,6 @@
 package edu.unicauca.aplimovil.ufriendly.ui.screens
 
+import android.R.attr.width
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,8 +9,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,9 +29,11 @@ import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import edu.unicauca.aplimovil.ufriendly.ui.components.Button
 import edu.unicauca.aplimovil.ufriendly.ui.components.ClassDaysSelector
 import edu.unicauca.aplimovil.ufriendly.ui.components.ColorSelector
+import edu.unicauca.aplimovil.ufriendly.ui.components.DashedBorderButton
 import edu.unicauca.aplimovil.ufriendly.ui.components.HourDropDown
 
 /**
@@ -51,12 +58,31 @@ fun AddSubjectScreen(){
     Scaffold(
         containerColor = MaterialTheme.colorScheme.primaryContainer,
         topBar = { TopBar("Add Subject") },
-        bottomBar = { BottomBar() },
+        bottomBar = {
+            Column {
+                //boton guardar
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Button(
+                        text = "Save subject",
+                        isSelected = save,
+                        onClick = { save = true },
+                        modifier = Modifier.size(width = 200.dp, height = 60.dp)
+                    )
+                }
+                BottomBar()
+            }
+                    },
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
         ) {
             //Formulario
             FormCard {
@@ -68,22 +94,14 @@ fun AddSubjectScreen(){
                     onValueChange = { newText -> nameSubject = newText }
                 )
 
-                //Dias de clase
-                ClassDaysSelector(
-                    selectedDays = selectedDays,
-                    onDaySelectedChange = { selectedDays = it}
-                )
+                //Agregar horario
+                Text(
+                    text = "Class schedules",
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.height(5.dp))
+                DashedBorderButton(onClick = {})
 
-                //hora inicio/fin
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ){
-                    HourDropDown(label = "Hour start", selectedHour = "7:00 AM", onHourSelected ={}, modifier = Modifier.weight(1f))
-                    HourDropDown(label = "Hour end", selectedHour = "8:00 PM", onHourSelected ={}, modifier = Modifier.weight(1f))
-                }
-                Spacer(modifier = Modifier.height(10.dp))
                 //nombre profesor
                 TextBoxForm(
                     label = "Teacher",
@@ -98,20 +116,8 @@ fun AddSubjectScreen(){
                     onColorSelected = { selectedColor = it }
                 )
             }
-            //boton guardar
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Button(
-                    text = "Save subject",
-                    isSelected = save,
-                    onClick = { save = true },
-                    modifier = Modifier.padding(end = 8.dp)
-                )
-            }
+
+
         }
     }
 }
