@@ -31,14 +31,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import edu.unicauca.aplimovil.ufriendly.ui.components.Button
-import edu.unicauca.aplimovil.ufriendly.ui.components.ClassDaysSelector
 import edu.unicauca.aplimovil.ufriendly.ui.components.ColorSelector
 import edu.unicauca.aplimovil.ufriendly.ui.components.DashedBorderButton
-import edu.unicauca.aplimovil.ufriendly.ui.components.HourDropDown
+import edu.unicauca.aplimovil.ufriendly.ui.components.ScheduleCard
+import edu.unicauca.aplimovil.ufriendly.ui.components.ScheduleSheet
 
 /**
  * Pantalla para agregar una nueva materia a la aplicación.
- * 
+ *
  * Esta pantalla contiene un formulario completo que permite al usuario ingresar:
  * - Nombre de la materia.
  * - Días de la semana en los que se dicta.
@@ -54,6 +54,8 @@ fun AddSubjectScreen(){
     var selectedDays by remember { mutableStateOf(setOf<String>())}
     var selectedColor by remember { mutableStateOf<Color?>(null) }
     var save by remember { mutableStateOf(false) }
+    var showSheet by remember { mutableStateOf(false) }
+    var schedules by remember { mutableStateOf(listOf<Triple<String, String, String>>()) }
     
     Scaffold(
         containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -100,7 +102,17 @@ fun AddSubjectScreen(){
                     color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(5.dp))
-                DashedBorderButton(onClick = {})
+                schedules.forEach { (day, start, end) ->
+                    ScheduleCard(
+                        day = day,
+                        hourStart = start,
+                        hourEnd = end,
+                        onDelete = { schedules = schedules - Triple(day, start, end) }
+                    )
+                    Spacer(Modifier.height(7.dp))
+                }
+
+                DashedBorderButton(onClick = {showSheet = true})
 
                 //nombre profesor
                 TextBoxForm(
@@ -116,8 +128,15 @@ fun AddSubjectScreen(){
                     onColorSelected = { selectedColor = it }
                 )
             }
-
-
+            if(showSheet){
+                ScheduleSheet(
+                    onDismiss = { showSheet = false },
+                    onConfirm = { day, start, end ->
+                        schedules = schedules + Triple(day, start, end)
+                        showSheet = false
+                    }
+                )
+            }
         }
     }
 }

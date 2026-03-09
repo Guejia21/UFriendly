@@ -43,7 +43,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import edu.unicauca.aplimovil.ufriendly.data.Subject
 import edu.unicauca.aplimovil.ufriendly.ui.components.BottomBar
+import edu.unicauca.aplimovil.ufriendly.ui.screens.AddSubjectScreen
+import edu.unicauca.aplimovil.ufriendly.ui.screens.SubjectScreen
 import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
 
 class MainActivity : ComponentActivity() {
@@ -51,9 +54,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            UFriendlyTheme {
-
-            }
+            AddSubjectScreen()
         }
     }
 }

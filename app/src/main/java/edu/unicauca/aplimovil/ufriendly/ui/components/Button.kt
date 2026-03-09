@@ -22,7 +22,8 @@ fun Button(
     text: String,
     isSelected: Boolean,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
 ) {
     Button(
         onClick = onClick,
@@ -31,7 +32,8 @@ fun Button(
             contentColor = if (isSelected) MaterialTheme.colorScheme.onTertiary else MaterialTheme.colorScheme.onPrimary
         ),
         shape = RoundedCornerShape(8.dp),
-        modifier = modifier
+        modifier = modifier,
+        enabled = enabled
     ) {
         Text(text)
     }
