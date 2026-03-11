@@ -10,4 +10,7 @@
     <string name="done_label_task">Done</string>
     <string name="expired_task_label">Expired</string>
     <string name="search_subject_label">Search subject</string>
+    <string name="today_label">Today</string>
+    <string name="all_label">All</string>
+    <string name="upcoming_label">Comming</string>
 </resources>

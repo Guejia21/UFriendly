@@ -11,4 +11,7 @@
     <string name="done_label_task">Hecho</string>
     <string name="expired_task_label">Vencida</string>
     <string name="search_subject_label">Buscar materia</string>
+    <string name="today_label">Hoy</string>
+    <string name="all_label">Todas</string>
+    <string name="upcoming_label">Próximo</string>
 </resources>

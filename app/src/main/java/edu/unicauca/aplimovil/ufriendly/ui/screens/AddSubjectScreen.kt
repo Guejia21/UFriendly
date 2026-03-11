@@ -79,7 +79,7 @@ fun AddSubjectScreen(){
                 BottomBar()
             }
                     },
-    ) { innerPadding ->
+    ) {innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)

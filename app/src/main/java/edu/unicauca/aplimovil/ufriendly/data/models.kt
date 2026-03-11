@@ -16,3 +16,10 @@ data class Subject(
     val partialScore: Double, //por ahora solo se quema
     val color: Color
 )
+data class Task(
+    val name: String,
+    val description: String,
+    val dueDate: String,
+    val isDone: Boolean,
+    val subject: Subject
+)
