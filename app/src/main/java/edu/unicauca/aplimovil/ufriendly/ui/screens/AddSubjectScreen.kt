@@ -30,6 +30,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import edu.unicauca.aplimovil.ufriendly.ui.components.Button
 import edu.unicauca.aplimovil.ufriendly.ui.components.ColorSelector
 import edu.unicauca.aplimovil.ufriendly.ui.components.DashedBorderButton
@@ -47,7 +49,7 @@ import edu.unicauca.aplimovil.ufriendly.ui.components.ScheduleSheet
  * - Color identificativo para la materia.
  */
 @Composable
-fun AddSubjectScreen(){
+fun AddSubjectScreen(navController: NavHostController){
     // Estados para los campos del formulario
     var nameSubject by remember { mutableStateOf("") }
     var nameTeacher by remember { mutableStateOf("") }
@@ -76,7 +78,7 @@ fun AddSubjectScreen(){
                         modifier = Modifier.size(width = 200.dp, height = 60.dp)
                     )
                 }
-                BottomBar()
+                BottomBar(navController)
             }
                     },
     ) {innerPadding ->
@@ -141,10 +143,11 @@ fun AddSubjectScreen(){
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun AddSubjectScreenPreview(){
     UFriendlyTheme {
-        AddSubjectScreen()
+        AddSubjectScreen(navController = rememberNavController())
     }
 }

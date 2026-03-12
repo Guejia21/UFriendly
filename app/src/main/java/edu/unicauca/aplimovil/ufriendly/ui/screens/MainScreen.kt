@@ -15,6 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import edu.unicauca.aplimovil.ufriendly.data.DashboardState
 import edu.unicauca.aplimovil.ufriendly.data.Subject
 import edu.unicauca.aplimovil.ufriendly.ui.components.BottomBar
@@ -27,11 +30,12 @@ fun MainScreen(
     state: DashboardState,
     subjects: List<Subject>,
     onAddClick: () -> Unit,
+    navController: NavHostController,
     onViewAllClick: () -> Unit
 ) {
     Scaffold(
         containerColor = MaterialTheme.colorScheme.primaryContainer,
-        bottomBar = { BottomBar() },
+        bottomBar = { BottomBar(navController) },
         floatingActionButton = {
             FloatingActionButton(onClick = onAddClick, shape = MaterialTheme.shapes.extraLarge, containerColor = MaterialTheme.colorScheme.tertiaryContainer) {
                 Icon(
@@ -64,6 +68,7 @@ fun MainScreenPreview() {
             state = state,
             subjects = subjects,
             onAddClick = {},
+            navController = rememberNavController(),
             onViewAllClick = {}
         )
     }

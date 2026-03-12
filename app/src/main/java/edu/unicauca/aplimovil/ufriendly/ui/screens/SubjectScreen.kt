@@ -23,6 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import edu.unicauca.aplimovil.ufriendly.data.Subject
 import edu.unicauca.aplimovil.ufriendly.ui.components.BottomBar
 import edu.unicauca.aplimovil.ufriendly.ui.components.SearchBar
@@ -41,6 +44,7 @@ import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
 @Composable
 fun SubjectScreen(
     subjects: List<Subject>,
+    navController: NavHostController,
     onAddClick: () -> Unit,
 ) {
     val textSearch = remember { mutableStateOf("") }
@@ -49,7 +53,7 @@ fun SubjectScreen(
     Scaffold(
         containerColor = MaterialTheme.colorScheme.primaryContainer,
         topBar = {TopBar("Subjects")},
-        bottomBar = { BottomBar() },
+        bottomBar = { BottomBar(navController) },
         floatingActionButton = {
             FloatingActionButton(onClick = onAddClick, shape = MaterialTheme.shapes.extraLarge, containerColor = MaterialTheme.colorScheme.tertiaryContainer) {
                 Icon(
@@ -125,6 +129,7 @@ fun SubjectScreenPreview() {
     UFriendlyTheme() {
         SubjectScreen(
             subjects = subjects,
+            navController = rememberNavController(),
             onAddClick = {}
         )
     }

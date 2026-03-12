@@ -12,6 +12,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import edu.unicauca.aplimovil.ufriendly.R
 import edu.unicauca.aplimovil.ufriendly.data.Subject
 import edu.unicauca.aplimovil.ufriendly.data.Task
@@ -23,6 +26,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun TaskScreen(
     tasks: List<Task>,
+    navController: NavHostController,
     onAddClick: () -> Unit,
 ) {
     //Variable para saber que botón está seleccionado
@@ -38,13 +42,15 @@ fun TaskScreen(
     }
 
     // Separar tareas de hoy y próximas
-    val todayTasks = filteredTasks.filter { isToday(it.dueDate) }
-    val upcomingTasks = filteredTasks.filter { !isToday(it.dueDate) }
+    //TODO Corregir filtros para que las tareas hechas no aparezcan en el filtro "All"
+    val todayTasks = filteredTasks.filter { isToday(it.dueDate)}
+    //TODO Corregir label para las tareas expiradas
+    val upcomingTasks = filteredTasks.filter { !isToday(it.dueDate)}
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.primaryContainer,
         topBar = { TopBar(stringResource(R.string.task_label)) },
-        bottomBar = { BottomBar() },
+        bottomBar = { BottomBar(navController) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = onAddClick,
@@ -178,6 +184,6 @@ fun TaskScreenPreview() {
         Task("Proyecto de automatización", "Desc", "2023-10-28", false, subject2)
     )
     UFriendlyTheme {
-        TaskScreen(tasks = tasks, onAddClick = {})
+        TaskScreen(tasks = tasks, navController = rememberNavController(),onAddClick = {})
     }
 }
