@@ -29,7 +29,7 @@ import edu.unicauca.aplimovil.ufriendly.data.DashboardState
 @Composable
 fun WelcomeDashboard(
     state: DashboardState,
-    onViewAllClick: () -> Unit = {} // Va para navegabilidad (DESPUÉS)
+    onViewAllClick: () -> Unit = {}
 ) {
     Surface(
         shape = MaterialTheme.shapes.medium,

@@ -14,4 +14,6 @@
     <string name="today_label">Hoy</string>
     <string name="all_label">Todas</string>
     <string name="upcoming_label">Próximo</string>
+    <string name="expired_label">Tarde</string>
+    <string name="no_tasks_label">"No hay tareas %1$s "</string>
 </resources>

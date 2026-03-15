@@ -13,4 +13,6 @@
     <string name="today_label">Today</string>
     <string name="all_label">All</string>
     <string name="upcoming_label">Comming</string>
+    <string name="expired_label">Late</string>
+    <string name="no_tasks_label">There are no %1$s tasks</string>
 </resources>

@@ -23,39 +23,25 @@ import edu.unicauca.aplimovil.ufriendly.data.Subject
 import edu.unicauca.aplimovil.ufriendly.ui.components.BottomBar
 import edu.unicauca.aplimovil.ufriendly.ui.components.SubjectDashboard
 import edu.unicauca.aplimovil.ufriendly.ui.components.WelcomeDashboard
+import edu.unicauca.aplimovil.ufriendly.ui.nav.ScreenName
 import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
 
 @Composable
 fun MainScreen(
     state: DashboardState,
     subjects: List<Subject>,
-    onAddClick: () -> Unit,
-    navController: NavHostController,
-    onViewAllClick: () -> Unit
+    navController: NavHostController
 ) {
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
-        bottomBar = { BottomBar(navController) },
-        floatingActionButton = {
-            FloatingActionButton(onClick = onAddClick, shape = MaterialTheme.shapes.extraLarge, containerColor = MaterialTheme.colorScheme.tertiaryContainer) {
-                Icon(
-                    imageVector = Icons.Rounded.Add,
-                    contentDescription = "Add new entry"
-                )
-            }
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()) //recomendado para dispositivos pequeños donde haya que hacer scroll
-        ) {
+    GenericScreen(navController=navController)
+    {
+        Column {
             WelcomeDashboard(
-                state = state
+                state = state,
+                onViewAllClick = { navController.navigate(ScreenName.TaskScreen.name) }
             )
             SubjectDashboard(
-                subjects = subjects
+                subjects = subjects,
+                onViewAllClick = { navController.navigate(ScreenName.SubjectScreen.name) }
             )
         }
     }
@@ -67,9 +53,7 @@ fun MainScreenPreview() {
         MainScreen(
             state = state,
             subjects = subjects,
-            onAddClick = {},
-            navController = rememberNavController(),
-            onViewAllClick = {}
+            navController = rememberNavController()
         )
     }
 }

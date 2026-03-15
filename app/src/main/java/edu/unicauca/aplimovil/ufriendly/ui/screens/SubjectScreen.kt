@@ -1,5 +1,6 @@
 package edu.unicauca.aplimovil.ufriendly.ui.screens
 
+import edu.unicauca.aplimovil.ufriendly.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -45,28 +47,17 @@ import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
 fun SubjectScreen(
     subjects: List<Subject>,
     navController: NavHostController,
-    onAddClick: () -> Unit,
 ) {
     val textSearch = remember { mutableStateOf("") }
     var mostrarCursando by remember { mutableStateOf(true) }
 
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
-        topBar = {TopBar("Subjects")},
-        bottomBar = { BottomBar(navController) },
-        floatingActionButton = {
-            FloatingActionButton(onClick = onAddClick, shape = MaterialTheme.shapes.extraLarge, containerColor = MaterialTheme.colorScheme.tertiaryContainer) {
-                Icon(
-                    imageVector = Icons.Rounded.Add,
-                    contentDescription = "Add new entry"
-                )
-            }
-        }
-    ) { innerPadding ->
+    GenericScreen(
+        navController = navController,
+        topBar = { TopBar(stringResource(R.string.subject_label)) }
+    )
+    {
         Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
+            modifier = Modifier.verticalScroll(rememberScrollState()) //recomendado para dispositivos pequeños donde haya que hacer scroll
         ) {
             //Barra de búsqueda
             SearchBar(
@@ -94,21 +85,15 @@ fun SubjectScreen(
                     onClick = { mostrarCursando = false },
                     modifier = Modifier.padding(start = 8.dp)
                 )
-        }
-            // Contenido cuerpo scaffold
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-            ){
-                if (mostrarCursando) {
-                    subjects.filter { it.completionPercentage < 100 }.take(5).forEach { subject ->
-                        SubjectFullCard(subject)
-                    }
-                }else{
-                    subjects.filter { it.completionPercentage == 100 }.take(5).forEach { subject ->
-                        SubjectFullCard(subject)
-                    }
+            }
+            // Contenido principal - Materias
+            if (mostrarCursando) {
+                subjects.filter { it.completionPercentage < 100 }.take(5).forEach { subject ->
+                    SubjectFullCard(subject)
+                }
+            }else{
+                subjects.filter { it.completionPercentage == 100 }.take(5).forEach { subject ->
+                    SubjectFullCard(subject)
                 }
             }
         }
@@ -130,7 +115,6 @@ fun SubjectScreenPreview() {
         SubjectScreen(
             subjects = subjects,
             navController = rememberNavController(),
-            onAddClick = {}
         )
     }
 }

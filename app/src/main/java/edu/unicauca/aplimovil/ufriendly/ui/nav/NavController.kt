@@ -44,22 +44,18 @@ fun AppNavHost(
             MainScreen(
                 state,
                 listOf(subject, subject2),
-                onAddClick = {},
-                onViewAllClick = {},
                 navController = navController  // ← pasar
             )
         }
         composable(route = ScreenName.SubjectScreen.name) {
             SubjectScreen(
                 subjects = subjects,
-                onAddClick = {},
                 navController = navController  // ← pasar
             )
         }
         composable(route = ScreenName.TaskScreen.name) {
             TaskScreen(
                 tasks = tasks,
-                onAddClick = {},
                 navController = navController  // ← pasar
             )
         }

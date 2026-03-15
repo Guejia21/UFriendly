@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import edu.unicauca.aplimovil.ufriendly.R
@@ -26,11 +25,10 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun TaskScreen(
     tasks: List<Task>,
-    navController: NavHostController,
-    onAddClick: () -> Unit,
+    navController: NavHostController
 ) {
     //Variable para saber que botón está seleccionado
-    var filterSelected by remember { mutableStateOf("All") }
+    var filterSelected by remember { mutableStateOf("Pending") }
     var taskList by remember { mutableStateOf(tasks) }
 
     // Filtrar tareas según selección
@@ -40,35 +38,17 @@ fun TaskScreen(
         "Expired"  -> taskList.filter { isExpired(it.dueDate) && !it.isDone }
         else       -> taskList
     }
-
+    //TODO bug: cuando una tarea expirada se completa, no aparece en Done
     // Separar tareas de hoy y próximas
-    //TODO Corregir filtros para que las tareas hechas no aparezcan en el filtro "All"
     val todayTasks = filteredTasks.filter { isToday(it.dueDate)}
-    //TODO Corregir label para las tareas expiradas
-    val upcomingTasks = filteredTasks.filter { !isToday(it.dueDate)}
+    val upcomingTasks = filteredTasks.filter { !isToday(it.dueDate) && !isExpired(it.dueDate)}
+    val lateTasks = filteredTasks.filter { isExpired(it.dueDate) && !it.isDone }
 
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
-        topBar = { TopBar(stringResource(R.string.task_label)) },
-        bottomBar = { BottomBar(navController) },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onAddClick,
-                shape = MaterialTheme.shapes.extraLarge,
-                containerColor = MaterialTheme.colorScheme.tertiaryContainer
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Add,
-                    contentDescription = "Add new entry"
-                )
-            }
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-        ) {
+    GenericScreen(
+        navController = navController,
+        topBar = { TopBar(stringResource(R.string.task_label)) }
+    ) {
+        Column {
             // Botones de filtro
             Row(
                 modifier = Modifier
@@ -77,14 +57,14 @@ fun TaskScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(
-                    text = stringResource(R.string.all_label),
-                    isSelected = filterSelected == "All",
-                    onClick = { filterSelected = "All" }
-                )
-                Button(
                     text = stringResource(R.string.pending_task),
                     isSelected = filterSelected == "Pending",
                     onClick = { filterSelected = "Pending" }
+                )
+                Button(
+                    text = stringResource(R.string.all_label),
+                    isSelected = filterSelected == "All",
+                    onClick = { filterSelected = "All" }
                 )
                 Button(
                     text = stringResource(R.string.done_label_task),
@@ -117,7 +97,7 @@ fun TaskScreen(
                     }
                 }
 
-                // Sección "Próxima"
+                // Sección "Próxima" en caso de que sean tareas pendientes
                 if (upcomingTasks.isNotEmpty()) {
                     item {
                         TaskSection(
@@ -131,7 +111,20 @@ fun TaskScreen(
                         )
                     }
                 }
-
+                // Sección "Tarde" en caso de que sean tareas expiradas
+                if (lateTasks.isNotEmpty()) {
+                    item {
+                        TaskSection(
+                            title = stringResource(R.string.expired_label),
+                            tasks = lateTasks,
+                            onCheckedChange = { task, checked ->
+                                taskList = taskList.map {
+                                    if (it == task) it.copy(isDone = checked) else it
+                                }
+                            }
+                        )
+                    }
+                }
                 // Mensaje vacío
                 if (filteredTasks.isEmpty()) {
                     item {
@@ -142,7 +135,10 @@ fun TaskScreen(
                             contentAlignment = androidx.compose.ui.Alignment.Center
                         ) {
                             Text(
-                                text = "No hay tareas",
+                                text = stringResource(
+                                    R.string.no_tasks_label,
+                                    filterSelected.lowercase()
+                                ),
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -180,10 +176,10 @@ fun TaskScreenPreview() {
     val tasks = listOf(
         Task("Preparar presentación de cálculo", "Desc", today, false, subject),
         Task("Estudiar ondas", "Desc", today, false, subject),
-        Task("Proyecto de programación", "Desc", "2023-10-28", false, subject2),
+        Task("Proyecto de programación", "Desc", "2026-04-28", false, subject2),
         Task("Proyecto de automatización", "Desc", "2023-10-28", false, subject2)
     )
     UFriendlyTheme {
-        TaskScreen(tasks = tasks, navController = rememberNavController(),onAddClick = {})
+        TaskScreen(tasks = tasks, navController = rememberNavController())
     }
 }

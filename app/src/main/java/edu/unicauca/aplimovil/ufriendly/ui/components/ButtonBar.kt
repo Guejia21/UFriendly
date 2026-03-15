@@ -11,15 +11,19 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.MailOutline
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import edu.unicauca.aplimovil.ufriendly.R
 import edu.unicauca.aplimovil.ufriendly.ui.nav.ScreenName
 
 @Composable
 fun BottomBar(navController: NavHostController) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -31,19 +35,23 @@ fun BottomBar(navController: NavHostController) {
             label = stringResource(R.string.home_button_label),
             icon = Icons.Rounded.Home,
             contentDescription = stringResource(R.string.home_button_label),
-            onClick = { navController.navigate(ScreenName.Home.name) }
+            onClick = { navController.navigate(ScreenName.Home.name) },
+            isSelected = currentRoute == ScreenName.Home.name
         )
         IconButton(
             label = stringResource(R.string.subject_label),
             icon = Icons.Rounded.MailOutline,
             contentDescription = stringResource(R.string.subject_label),
-            onClick = { navController.navigate(ScreenName.SubjectScreen.name) }
+            onClick = { navController.navigate(ScreenName.SubjectScreen.name) },
+            isSelected = currentRoute == ScreenName.SubjectScreen.name
         )
         IconButton(
             label = stringResource(R.string.task_label),
             icon = Icons.Rounded.Check,
             contentDescription = stringResource(R.string.task_label),
-            onClick = { navController.navigate(ScreenName.TaskScreen.name) })
+            onClick = { navController.navigate(ScreenName.TaskScreen.name) },
+            isSelected = currentRoute == ScreenName.TaskScreen.name
+        )
         IconButton(
             label = stringResource(R.string.grades_label),
             icon = Icons.Rounded.Edit,

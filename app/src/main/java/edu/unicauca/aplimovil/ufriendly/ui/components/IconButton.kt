@@ -13,14 +13,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun IconButton(label: String,icon: ImageVector, contentDescription: String, onClick: () -> Unit) {
+fun IconButton(label: String,icon: ImageVector, contentDescription: String,isSelected: Boolean = false, onClick: () -> Unit) {
     TextButton(onClick = onClick) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(
                 imageVector = icon,
                 contentDescription = contentDescription,
                 tint = Color.White,
-                modifier = Modifier.size(25.dp)
+                modifier = if (isSelected) Modifier.size(35.dp) else Modifier.size(25.dp)
             )
             Text(text = label, color = Color.White)
         }
