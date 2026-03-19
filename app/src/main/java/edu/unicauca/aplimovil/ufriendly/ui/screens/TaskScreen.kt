@@ -42,7 +42,7 @@ fun TaskScreen(
     // Separar tareas de hoy y próximas
     val todayTasks = filteredTasks.filter { isToday(it.dueDate)}
     val upcomingTasks = filteredTasks.filter { !isToday(it.dueDate) && !isExpired(it.dueDate)}
-    val lateTasks = filteredTasks.filter { isExpired(it.dueDate) && !it.isDone }
+    val lateTasks = filteredTasks.filter { isExpired(it.dueDate)}
 
     GenericScreen(
         navController = navController,

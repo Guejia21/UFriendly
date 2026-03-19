@@ -30,10 +30,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import edu.unicauca.aplimovil.ufriendly.R
 import edu.unicauca.aplimovil.ufriendly.ui.components.BottomBar
 import edu.unicauca.aplimovil.ufriendly.ui.components.FabMenuItem
+import edu.unicauca.aplimovil.ufriendly.ui.nav.ScreenName
 
 
 @Composable
@@ -79,10 +82,15 @@ fun GenericScreen(
                         horizontalAlignment = Alignment.End,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        //TODO Change the style of this buttons
-                        FabMenuItem(icon = Icons.Default.Star, label = "Añadir calificación") { }
-                        FabMenuItem(icon = Icons.Default.Done, label = "Añadir tarea") { }
-                        FabMenuItem(icon = Icons.Default.Email, label = "Añadir materia") { }
+                        FabMenuItem(icon = Icons.Default.Star, label = stringResource(R.string.add_grade_label)) {
+                            navController.navigate(ScreenName.AddGradeScreen.name)
+                        }
+                        FabMenuItem(icon = Icons.Default.Done, label = stringResource(R.string.add_task_label)) {
+                            navController.navigate(ScreenName.AddTaskScreen.name)
+                        }
+                        FabMenuItem(icon = Icons.Default.Email, label = stringResource(R.string.add_subject_label)) {
+                            navController.navigate(ScreenName.AddSubjectScreen.name)
+                        }
                     }
                 }
             }

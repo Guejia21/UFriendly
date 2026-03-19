@@ -15,4 +15,8 @@
     <string name="upcoming_label">Comming</string>
     <string name="expired_label">Late</string>
     <string name="no_tasks_label">There are no %1$s tasks</string>
+    <string name="add_grade_label">Add grade</string>
+    <string name="add_task_label">Add task</string>
+    <string name="add_subject_label">Add subject</string>
+    <string name="save_subject_label">Save subject</string>
 </resources>

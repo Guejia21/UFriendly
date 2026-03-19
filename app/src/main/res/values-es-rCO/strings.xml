@@ -16,4 +16,8 @@
     <string name="upcoming_label">Próximo</string>
     <string name="expired_label">Tarde</string>
     <string name="no_tasks_label">"No hay tareas %1$s "</string>
+    <string name="add_grade_label">Añadir calificación</string>
+    <string name="add_task_label">Añadir tarea</string>
+    <string name="add_subject_label">Añadir materia</string>
+    <string name="save_subject_label">Guardar materia</string>
 </resources>

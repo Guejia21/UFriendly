@@ -30,7 +30,7 @@ fun FormCard(
     Surface(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            .padding(vertical = 8.dp, horizontal = 8.dp),
         shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.onPrimary
     ) {

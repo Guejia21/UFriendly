@@ -29,9 +29,11 @@ import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import edu.unicauca.aplimovil.ufriendly.R
 import edu.unicauca.aplimovil.ufriendly.ui.components.Button
 import edu.unicauca.aplimovil.ufriendly.ui.components.ColorSelector
 import edu.unicauca.aplimovil.ufriendly.ui.components.DashedBorderButton
@@ -50,6 +52,7 @@ import edu.unicauca.aplimovil.ufriendly.ui.components.ScheduleSheet
  */
 @Composable
 fun AddSubjectScreen(navController: NavHostController){
+    //TODO Cambiar los estados a un ViewModel
     // Estados para los campos del formulario
     var nameSubject by remember { mutableStateOf("") }
     var nameTeacher by remember { mutableStateOf("") }
@@ -59,33 +62,12 @@ fun AddSubjectScreen(navController: NavHostController){
     var showSheet by remember { mutableStateOf(false) }
     var schedules by remember { mutableStateOf(listOf<Triple<String, String, String>>()) }
     
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
+    GenericScreen(
+        navController = navController,
         topBar = { TopBar("Add Subject") },
-        bottomBar = {
-            Column {
-                //boton guardar
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Button(
-                        text = "Save subject",
-                        isSelected = save,
-                        onClick = { save = true },
-                        modifier = Modifier.size(width = 200.dp, height = 60.dp)
-                    )
-                }
-                BottomBar(navController)
-            }
-                    },
-    ) {innerPadding ->
+    ) {
         Column(
             modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
             //Formulario
@@ -137,6 +119,19 @@ fun AddSubjectScreen(navController: NavHostController){
                         schedules = schedules + Triple(day, start, end)
                         showSheet = false
                     }
+                )
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Button(
+                    text = stringResource(R.string.save_subject_label),
+                    isSelected = save,
+                    onClick = { save = true },
+                    modifier = Modifier.size(width = 200.dp, height = 60.dp)
                 )
             }
         }

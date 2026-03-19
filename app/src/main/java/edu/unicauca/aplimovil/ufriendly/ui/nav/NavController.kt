@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import edu.unicauca.aplimovil.ufriendly.data.DashboardState
 import edu.unicauca.aplimovil.ufriendly.data.Subject
 import edu.unicauca.aplimovil.ufriendly.data.Task
+import edu.unicauca.aplimovil.ufriendly.ui.screens.AddSubjectScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.MainScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.SubjectScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.TaskScreen
@@ -20,7 +21,11 @@ import java.time.format.DateTimeFormatter
 enum class ScreenName{
     Home,
     SubjectScreen,
-    TaskScreen
+    TaskScreen,
+    GradeScreen,
+    AddTaskScreen,
+    AddSubjectScreen,
+    AddGradeScreen
 }
 val subject = Subject("Cálculo I", listOf("Lunes 8-11"), "Juan Pérez", 80, 2.9, Color(0xFFE8D08A))
 val subject2 = Subject("Programación Avanzada", listOf("Martes 10-12"), "Ana García", 75, 3.5, Color(0xFF90CAF9))
@@ -44,20 +49,32 @@ fun AppNavHost(
             MainScreen(
                 state,
                 listOf(subject, subject2),
-                navController = navController  // ← pasar
+                navController = navController
             )
         }
         composable(route = ScreenName.SubjectScreen.name) {
             SubjectScreen(
                 subjects = subjects,
-                navController = navController  // ← pasar
+                navController = navController
             )
         }
         composable(route = ScreenName.TaskScreen.name) {
             TaskScreen(
                 tasks = tasks,
-                navController = navController  // ← pasar
+                navController = navController
             )
+        }
+        composable(route = ScreenName.GradeScreen.name) {
+
+        }
+        composable(route = ScreenName.AddTaskScreen.name ) {
+
+        }
+        composable(route = ScreenName.AddSubjectScreen.name) {
+            AddSubjectScreen(navController)
+        }
+        composable(route = ScreenName.AddGradeScreen.name) {
+
         }
     }
 }
