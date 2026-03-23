@@ -3,7 +3,7 @@
     <string name="app_name">UFriendly</string>
     <string name="task_summary_label">Resumen de tareas</string>
     <string name="button_label">Ver todas</string>
-    <string name="subject_label">Materias</string>
+    <string name="subjects_label">Materias</string>
     <string name="home_button_label">Home</string>
     <string name="task_label">Tareas</string>
     <string name="grades_label">Calificaciones</string>
@@ -20,4 +20,8 @@
     <string name="add_task_label">Añadir tarea</string>
     <string name="add_subject_label">Añadir materia</string>
     <string name="save_subject_label">Guardar materia</string>
+    <string name="save_generic_label">Guardar</string>
+    <string name="save_task_label">Guardar tarea</string>
+    <string name="date_label">Fecha</string>
+    <string name="subject_label">Materia</string>
 </resources>

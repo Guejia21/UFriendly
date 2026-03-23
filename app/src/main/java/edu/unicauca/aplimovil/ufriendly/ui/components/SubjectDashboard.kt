@@ -47,7 +47,7 @@ fun SubjectDashboard(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = stringResource(R.string.subject_label),
+                    text = stringResource(R.string.subjects_label),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )

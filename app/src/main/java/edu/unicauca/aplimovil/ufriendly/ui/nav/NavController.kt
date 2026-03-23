@@ -11,6 +11,7 @@ import edu.unicauca.aplimovil.ufriendly.data.DashboardState
 import edu.unicauca.aplimovil.ufriendly.data.Subject
 import edu.unicauca.aplimovil.ufriendly.data.Task
 import edu.unicauca.aplimovil.ufriendly.ui.screens.AddSubjectScreen
+import edu.unicauca.aplimovil.ufriendly.ui.screens.AddTaskScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.MainScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.SubjectScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.TaskScreen
@@ -68,7 +69,7 @@ fun AppNavHost(
 
         }
         composable(route = ScreenName.AddTaskScreen.name ) {
-
+            AddTaskScreen(navController, subjects)
         }
         composable(route = ScreenName.AddSubjectScreen.name) {
             AddSubjectScreen(navController)

@@ -39,9 +39,9 @@ fun BottomBar(navController: NavHostController) {
             isSelected = currentRoute == ScreenName.Home.name
         )
         IconButton(
-            label = stringResource(R.string.subject_label),
+            label = stringResource(R.string.subjects_label),
             icon = Icons.Rounded.MailOutline,
-            contentDescription = stringResource(R.string.subject_label),
+            contentDescription = stringResource(R.string.subjects_label),
             onClick = { navController.navigate(ScreenName.SubjectScreen.name) },
             isSelected = currentRoute == ScreenName.SubjectScreen.name || currentRoute == ScreenName.AddSubjectScreen.name
         )

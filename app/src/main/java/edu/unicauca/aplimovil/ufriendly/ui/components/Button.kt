@@ -7,7 +7,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
 
 /**
  * Botón de filtro personalizado que cambia de color según su estado de selección.
@@ -35,6 +37,22 @@ fun Button(
         modifier = modifier,
         enabled = enabled
     ) {
-        Text(text)
+        Text(
+            text=text,
+            fontSize = MaterialTheme.typography.titleMedium.fontSize,
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ButtonPreview() {
+    UFriendlyTheme {
+        Button(
+            text = "Pending",
+            isSelected = true,
+            onClick = {}
+        )
+
     }
 }

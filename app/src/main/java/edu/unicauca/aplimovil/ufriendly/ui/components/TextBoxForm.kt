@@ -28,7 +28,6 @@ fun TextBoxForm(label: String, placeholder: String, value: String, onValueChange
         color = MaterialTheme.colorScheme.primary,
         fontWeight = FontWeight.Bold
     )
-    Spacer(modifier = Modifier.height(5.dp))
     OutlinedTextField(
         value = value,
         onValueChange = { onValueChange(it) },
@@ -37,6 +36,7 @@ fun TextBoxForm(label: String, placeholder: String, value: String, onValueChange
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedBorderColor = MaterialTheme.colorScheme.primary,
             focusedBorderColor = MaterialTheme.colorScheme.primary,
-        )
+        ),
+        singleLine = true
     )
 }

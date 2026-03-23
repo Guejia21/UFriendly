@@ -29,6 +29,7 @@ import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.keepScreenOn
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
@@ -58,7 +59,6 @@ fun AddSubjectScreen(navController: NavHostController){
     var nameTeacher by remember { mutableStateOf("") }
     var selectedDays by remember { mutableStateOf(setOf<String>())}
     var selectedColor by remember { mutableStateOf<Color?>(null) }
-    var save by remember { mutableStateOf(false) }
     var showSheet by remember { mutableStateOf(false) }
     var schedules by remember { mutableStateOf(listOf<Triple<String, String, String>>()) }
     
@@ -71,7 +71,10 @@ fun AddSubjectScreen(navController: NavHostController){
                 .verticalScroll(rememberScrollState())
         ) {
             //Formulario
-            FormCard {
+            FormCard (
+                buttonLabel = stringResource(R.string.save_subject_label),
+                onClick = {/*saveSubject() o algo asi*/}
+            ){
                 //nombre materia
                 TextBoxForm(
                     label = "Name",
@@ -85,7 +88,6 @@ fun AddSubjectScreen(navController: NavHostController){
                     text = "Class schedules",
                     color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Bold)
-                Spacer(modifier = Modifier.height(5.dp))
                 schedules.forEach { (day, start, end) ->
                     ScheduleCard(
                         day = day,
@@ -119,19 +121,6 @@ fun AddSubjectScreen(navController: NavHostController){
                         schedules = schedules + Triple(day, start, end)
                         showSheet = false
                     }
-                )
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Button(
-                    text = stringResource(R.string.save_subject_label),
-                    isSelected = save,
-                    onClick = { save = true },
-                    modifier = Modifier.size(width = 200.dp, height = 60.dp)
                 )
             }
         }

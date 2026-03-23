@@ -2,7 +2,7 @@
     <string name="app_name">UFriendly</string>
     <string name="task_summary_label">Task summary</string>
     <string name="button_label">See all</string>
-    <string name="subject_label">Subjects</string>
+    <string name="subjects_label">Subjects</string>
     <string name="home_button_label">Home</string>
     <string name="task_label">Tasks</string>
     <string name="grades_label">Grades</string>
@@ -12,11 +12,15 @@
     <string name="search_subject_label">Search subject</string>
     <string name="today_label">Today</string>
     <string name="all_label">All</string>
-    <string name="upcoming_label">Comming</string>
+    <string name="upcoming_label">Coming</string>
     <string name="expired_label">Late</string>
     <string name="no_tasks_label">There are no %1$s tasks</string>
     <string name="add_grade_label">Add grade</string>
     <string name="add_task_label">Add task</string>
     <string name="add_subject_label">Add subject</string>
     <string name="save_subject_label">Save subject</string>
+    <string name="save_generic_label">Save</string>
+    <string name="save_task_label">Save task</string>
+    <string name="date_label">Date</string>
+    <string name="subject_label">Subject</string>
 </resources>
