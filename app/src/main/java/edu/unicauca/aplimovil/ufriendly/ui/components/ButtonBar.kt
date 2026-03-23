@@ -56,6 +56,8 @@ fun BottomBar(navController: NavHostController) {
             label = stringResource(R.string.grades_label),
             icon = Icons.Rounded.Edit,
             contentDescription = stringResource(R.string.grades_label),
-            onClick = { /* Navigate to Grades if exists */ })
+            onClick = { navController.navigate(ScreenName.GradesScreen.name) },
+            isSelected = currentRoute == ScreenName.GradesScreen.name
+        )
     }
 }
