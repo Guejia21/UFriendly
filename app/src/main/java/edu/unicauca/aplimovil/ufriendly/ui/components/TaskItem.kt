@@ -65,7 +65,7 @@ fun TaskItem(
 @Preview
 @Composable
 fun TaskItemPreview(){
-    val subject = Subject("Cálculo I", listOf("Lunes 8-11"), "Juan Pérez", 80, 2.9, Color(0xFFE8D08A))
+    val subject = Subject("Cálculo I", listOf("Lunes 8-11"), "Juan Pérez", 80, 2.9, Color(0xFFE8D08A), null)
     val task = Task("Preparar presentación de cálculo", "Desc", "2023-10-2",false,subject)
     UFriendlyTheme {
         TaskItem(task = task, onCheckedChange = {})

@@ -64,10 +64,10 @@ val state = DashboardState(
     expiredCount = 2
 )
 val subjects = listOf(
-    Subject("Matemáticas", listOf("Lunes 8-11", "Miércoles 8-11"), "Juan Pérez", 80, 2.9, Color(0xFFE8D08A)),
-    Subject("Física", listOf("Martes 11-13", "Jueves 12-14"), "María Gómez", 75, 3.2, Color(0xFFD0C3E6)),
-    Subject("Química", listOf("Lunes 13-16", "Miércoles 13-16"), "Carlos Rodríguez", 60, 2.5, Color(0xFFE8D08A)),
-    Subject("Historia", listOf("Martes 16-19", "Jueves 16-19"), "Ana López", 90, 4.0, Color(0xFFE8D08A)),
-    Subject("Biología", listOf("Lunes 19-22", "Miércoles 19-22"), "Pedro Martínez", 70, 3.8, Color(0xFFD0C3E6)),
-    Subject("Literatura", listOf("Martes 22-25", "Jueves 22-25"), "Laura Sánchez", 85, 3.7, Color(0xFFE8D08A))
+    Subject("Matemáticas", listOf("Lunes 8-11", "Miércoles 8-11"), "Juan Pérez", 80, 2.9, Color(0xFFE8D08A), null),
+    Subject("Física", listOf("Martes 11-13", "Jueves 12-14"), "María Gómez", 75, 3.2, Color(0xFFD0C3E6), null),
+    Subject("Química", listOf("Lunes 13-16", "Miércoles 13-16"), "Carlos Rodríguez", 60, 2.5, Color(0xFFE8D08A), null),
+    Subject("Historia", listOf("Martes 16-19", "Jueves 16-19"), "Ana López", 90, 4.0, Color(0xFFE8D08A), null),
+    Subject("Biología", listOf("Lunes 19-22", "Miércoles 19-22"), "Pedro Martínez", 70, 3.8, Color(0xFFD0C3E6), null),
+    Subject("Literatura", listOf("Martes 22-25", "Jueves 22-25"), "Laura Sánchez", 85, 3.7, Color(0xFFE8D08A), null)
 )

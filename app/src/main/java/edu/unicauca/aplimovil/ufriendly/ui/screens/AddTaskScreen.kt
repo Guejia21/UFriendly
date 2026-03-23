@@ -70,6 +70,6 @@ fun AddTaskScreen(
 @Composable
 fun AddTaskScreenPreview(){
     UFriendlyTheme {
-        AddTaskScreen(navController = rememberNavController(), subjects = listOf(Subject("Cálculo I", listOf("Lunes 8-11"), "Juan Pérez", 80, 2.9, color = Color(0xFFE8D08A))))
+        AddTaskScreen(navController = rememberNavController(), subjects = listOf(Subject("Cálculo I", listOf("Lunes 8-11"), "Juan Pérez", 80, 2.9, color = Color(0xFFE8D08A), null)))
     }
 }

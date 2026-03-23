@@ -14,7 +14,8 @@ data class Subject(
     val teacher: String,
     val completionPercentage: Int,
     val partialScore: Double, //por ahora solo se quema
-    val color: Color
+    val color: Color,
+    val grades: List<Grade>?
 )
 data class Task(
     val name: String,
@@ -22,4 +23,11 @@ data class Task(
     val dueDate: String,
     val isDone: Boolean,
     val subject: Subject
+)
+
+data class Grade(
+    val name: String,
+    val value: Double,
+    val weight: Double,
+    val date: String
 )
