@@ -22,6 +22,7 @@
     <string name="save_subject_label">Guardar materia</string>
     <string name="save_generic_label">Guardar</string>
     <string name="save_task_label">Guardar tarea</string>
+    <string name="save_grade_label">Guardar calificación</string>
     <string name="date_label">Fecha</string>
     <string name="subject_label">Materia</string>
 </resources>

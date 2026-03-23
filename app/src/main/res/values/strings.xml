@@ -21,6 +21,7 @@
     <string name="save_subject_label">Save subject</string>
     <string name="save_generic_label">Save</string>
     <string name="save_task_label">Save task</string>
+    <string name="save_grade_label">Save grade</string>
     <string name="date_label">Date</string>
     <string name="subject_label">Subject</string>
 </resources>
