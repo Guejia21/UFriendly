@@ -11,6 +11,7 @@ import edu.unicauca.aplimovil.ufriendly.data.DashboardState
 import edu.unicauca.aplimovil.ufriendly.data.Grade
 import edu.unicauca.aplimovil.ufriendly.data.Subject
 import edu.unicauca.aplimovil.ufriendly.data.Task
+import edu.unicauca.aplimovil.ufriendly.ui.screens.AddGradeScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.AddSubjectScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.AddTaskScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.GradesScreen
@@ -80,7 +81,7 @@ fun AppNavHost(
             AddSubjectScreen(navController)
         }
         composable(route = ScreenName.AddGradeScreen.name) {
-
+            AddGradeScreen(navController)
         }
     }
 }
