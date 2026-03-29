@@ -7,8 +7,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import edu.unicauca.aplimovil.ufriendly.data.Subject
 import androidx.compose.foundation.lazy.items
+import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
 
 /**
  * Contenedor desplazable que lista las tarjetas de calificaciones para cada materia.

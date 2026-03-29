@@ -45,8 +45,9 @@ Function taken from "https://developer.android.com/develop/ui/compose/components
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePickerDocked(
-    selectedDate: String,
-    datePickerState: DatePickerState
+    value: String,
+    datePickerState: DatePickerState,
+    onValueChange: (String) -> Unit
 ) {
     var showDatePicker by remember { mutableStateOf(false) }
 
@@ -61,8 +62,8 @@ fun DatePickerDocked(
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
-                value = selectedDate,
-                onValueChange = { },
+                value = value,
+                onValueChange = {onValueChange(it)},
                 placeholder = { Text("Ex: 01/01/2023") },
                 readOnly = true,
                 trailingIcon = {
@@ -104,21 +105,22 @@ fun DatePickerDocked(
         }
     }
 }
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview
-@Composable
-fun DatePickerDockedPreview() {
-    val datePickerState = rememberDatePickerState()
-    val selectedDate = datePickerState.selectedDateMillis?.let {
-        convertMillisToDate(it)
-    } ?: ""
-
-    DatePickerDocked(
-        selectedDate = selectedDate,
-        datePickerState = datePickerState
-    )
-
-}
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Preview
+//@Composable
+//fun DatePickerDockedPreview() {
+//    val datePickerState = rememberDatePickerState()
+//    val selectedDate = datePickerState.selectedDateMillis?.let {
+//        convertMillisToDate(it)
+//    } ?: ""
+//
+//    DatePickerDocked(
+//        selectedDate = selectedDate,
+//        datePickerState = datePickerState,
+//        onValueChange = {}
+//    )
+//
+//}
 
 fun convertMillisToDate(millis: Long): String {
     val formatter = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())

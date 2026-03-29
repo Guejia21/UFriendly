@@ -7,8 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import edu.unicauca.aplimovil.ufriendly.R
-import edu.unicauca.aplimovil.ufriendly.data.Grade
-import edu.unicauca.aplimovil.ufriendly.data.Subject
+import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
 import edu.unicauca.aplimovil.ufriendly.ui.components.GradesContent
 import edu.unicauca.aplimovil.ufriendly.ui.components.TopBar
 import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
@@ -36,17 +35,17 @@ fun GradesScreen(
 /**
  * Previsualización de [GradesScreen] con datos de prueba.
  */
-@Preview(showBackground = true)
-@Composable
-fun GradesScreenPreview(){
-    val subject = Subject("Cálculo I", listOf("Lunes 8-11"), "Juan Pérez", 80, 2.9, Color(0xFFE8D08A), listOf(Grade("1er parcial", 4.2, 0.35, "2023-10-28"), Grade("2do parcial", 4.5, 0.35, "2023-10-28")))
-    val subject2 = Subject("Programación Avanzada", listOf("Martes 10-12"), "Ana García", 75, 3.5, Color(0xFF90CAF9), listOf(Grade("1er parcial", 4.2, 0.35, "2023-10-28")))
-    val subjects = listOf(subject, subject2)
-
-    UFriendlyTheme {
-        GradesScreen(
-            subjects = subjects,
-            navController = rememberNavController()
-        )
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun GradesScreenPreview(){
+//    val subject = Subject("Cálculo I", listOf("Lunes 8-11"), "Juan Pérez", 80, 2.9, Color(0xFFE8D08A), listOf(Grade("1er parcial", 4.2, 0.35, "2023-10-28"), Grade("2do parcial", 4.5, 0.35, "2023-10-28")))
+//    val subject2 = Subject("Programación Avanzada", listOf("Martes 10-12"), "Ana García", 75, 3.5, Color(0xFF90CAF9), listOf(Grade("1er parcial", 4.2, 0.35, "2023-10-28")))
+//    val subjects = listOf(subject, subject2)
+//
+//    UFriendlyTheme {
+//        GradesScreen(
+//            subjects = subjects,
+//            navController = rememberNavController()
+//        )
+//    }
+//}

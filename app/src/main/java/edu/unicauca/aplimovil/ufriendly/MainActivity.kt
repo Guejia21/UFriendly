@@ -43,21 +43,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import edu.unicauca.aplimovil.ufriendly.data.DashboardState
-import edu.unicauca.aplimovil.ufriendly.data.Subject
-import edu.unicauca.aplimovil.ufriendly.data.Task
-import edu.unicauca.aplimovil.ufriendly.ui.components.BottomBar
+import edu.unicauca.aplimovil.ufriendly.data.db.AppDatabase
 import edu.unicauca.aplimovil.ufriendly.ui.nav.AppNavHost
-import edu.unicauca.aplimovil.ufriendly.ui.screens.AddSubjectScreen
-import edu.unicauca.aplimovil.ufriendly.ui.screens.MainScreen
-import edu.unicauca.aplimovil.ufriendly.ui.screens.SubjectScreen
-import edu.unicauca.aplimovil.ufriendly.ui.screens.TaskScreen
-import edu.unicauca.aplimovil.ufriendly.ui.screens.state
 import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-
+import kotlin.getValue
+import edu.unicauca.aplimovil.ufriendly.data.repository.TaskRepository
 class MainActivity : ComponentActivity() {
+    val database by lazy {
+        AppDatabase.getDatabase(applicationContext)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -66,7 +62,7 @@ class MainActivity : ComponentActivity() {
                 //TaskScreen(tasks = tasks, onAddClick = {})
                 //val state = DashboardState("Jhoan Chacon",1,2,2)
                 //MainScreen(state, listOf(subject, subject2), onAddClick = {}, onViewAllClick = {})
-                AppNavHost()
+                AppNavHost(database = database)
             }
         }
     }

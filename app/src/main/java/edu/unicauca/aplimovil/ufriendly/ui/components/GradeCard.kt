@@ -20,8 +20,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import edu.unicauca.aplimovil.ufriendly.data.Subject
-import edu.unicauca.aplimovil.ufriendly.data.Grade
+import edu.unicauca.aplimovil.ufriendly.data.entity.Grade
+import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
+
 
 /**
  * Tarjeta informativa que presenta el resumen de notas de una materia específica.
@@ -62,7 +63,7 @@ fun GradeCard(subject: Subject) {
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = String.format("%.1f", subject.partialScore),
+                        text = String.format("%.1f", subject.score),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -71,15 +72,15 @@ fun GradeCard(subject: Subject) {
             }
 
             Spacer(modifier = Modifier.height(8.dp))
-
+            //TODO Actualizar a las nuevas entidades, aqui creo que se usa SubjectWithGrades
             HorizontalDivider(color = MaterialTheme.colorScheme.onSurfaceVariant, thickness = 1.dp)
             // ── Filas de evaluaciones ─────────────────────────────────────
-            subject.grades?.forEachIndexed { index, grade ->
-                GradeRow(grade = grade)
-                if (index < subject.grades.lastIndex) {
-                    HorizontalDivider(color = MaterialTheme.colorScheme.onSurfaceVariant, thickness = 0.5.dp)
-                }
-            }
+//            subject.grades?.forEachIndexed { index, grade ->
+//                GradeRow(grade = grade)
+//                if (index < subject.grades.lastIndex) {
+//                    HorizontalDivider(color = MaterialTheme.colorScheme.onSurfaceVariant, thickness = 0.5.dp)
+//                }
+//            }
 
         }
     }

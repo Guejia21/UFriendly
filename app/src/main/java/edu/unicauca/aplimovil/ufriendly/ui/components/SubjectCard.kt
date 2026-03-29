@@ -17,7 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import edu.unicauca.aplimovil.ufriendly.data.Subject
+import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
 
 @Composable
 fun SubjectCard(
@@ -53,15 +53,16 @@ fun SubjectCard(
                     modifier = Modifier.size(18.dp),
                     tint = MaterialTheme.colorScheme.primary
                 )
-                Column {
-                    subject.classDates.forEach { date ->
-                        Text(
-                            text = date,
-                            style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
+                //TODO Trabajar con SubjectWithClassDates
+//                Column {
+//                    subject.classDates.forEach { date ->
+//                        Text(
+//                            text = date,
+//                            style = MaterialTheme.typography.labelLarge,
+//                            color = MaterialTheme.colorScheme.onSurfaceVariant
+//                        )
+//                    }
+//                }
             }
         }
     }

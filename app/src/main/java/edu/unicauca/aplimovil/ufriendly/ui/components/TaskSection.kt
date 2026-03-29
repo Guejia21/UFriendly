@@ -10,8 +10,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import edu.unicauca.aplimovil.ufriendly.data.Subject
-import edu.unicauca.aplimovil.ufriendly.data.Task
+import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
+import edu.unicauca.aplimovil.ufriendly.data.entity.Task
 import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -41,7 +41,7 @@ fun TaskSection(
         }
     }
 }
-@Preview
+/*@Preview
 @Composable
 fun TaskSectionPreview(){
     val subject = Subject("Cálculo I", listOf("Lunes 8-11"), "Juan Pérez", 80, 2.9, Color(0xFFE8D08A), null)
@@ -57,4 +57,4 @@ fun TaskSectionPreview(){
         TaskSection(title = "Hoy", tasks = tasks, onCheckedChange = { _, _ -> })
 
     }
-}
+}*/

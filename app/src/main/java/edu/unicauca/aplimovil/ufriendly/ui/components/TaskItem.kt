@@ -11,8 +11,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import edu.unicauca.aplimovil.ufriendly.data.Subject
-import edu.unicauca.aplimovil.ufriendly.data.Task
+import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
+import edu.unicauca.aplimovil.ufriendly.data.entity.Task
 import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
 
 @Composable
@@ -54,7 +54,7 @@ fun TaskItem(
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
-                    text = "${task.subject.name} - ${task.dueDate}",
+                    text = "${task.subjectId} - ${task.dueDate}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -62,6 +62,7 @@ fun TaskItem(
         }
     }
 }
+/*
 @Preview
 @Composable
 fun TaskItemPreview(){
@@ -71,4 +72,4 @@ fun TaskItemPreview(){
         TaskItem(task = task, onCheckedChange = {})
     }
 
-}
+}*/

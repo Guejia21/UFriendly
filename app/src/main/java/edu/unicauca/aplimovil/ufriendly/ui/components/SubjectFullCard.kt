@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import edu.unicauca.aplimovil.ufriendly.data.Subject
+import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
 
 /**
  * Componente que muestra la información detallada de una materia en una tarjeta (Card).
@@ -33,7 +33,8 @@ fun SubjectFullCard(subject: Subject){
             .padding(vertical = 8.dp, horizontal = 16.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = subject.color
+            //TODO manejar la conversión del string a color
+            //containerColor = subject.color
         )
     ) {
         Row(
@@ -52,14 +53,14 @@ fun SubjectFullCard(subject: Subject){
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                // Lista de horarios de clase
-                subject.classDates.forEach { classDate -> Text(text = classDate) }
+                //TODO Manejar con SubjectWithClassDates
+                //subject.classDates.forEach { classDate -> Text(text = classDate) }
                 Text(text = "Mr. ${subject.teacher}")
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Score: ${subject.partialScore}",
+                    text = "Score: ${subject.score}",
                     fontSize = 18.sp
                 )
             }

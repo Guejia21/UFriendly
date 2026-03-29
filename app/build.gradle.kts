@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -58,6 +59,7 @@ dependencies {
     implementation(libs.androidx.compose.foundation.layout)
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -65,4 +67,15 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    //Dependencies for Room
+    ksp(libs.room.compiler)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    //Dependencies for ViewModel and Lifecycle
+    implementation(libs.lifecycle.viewmodelCompose)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    //Dependencies for Material3 Icons Extended
+    implementation(libs.compose.materialIconsExtended)
+    //Dependencies for Compose Navigation
+    implementation(libs.compose.navigation)
 }

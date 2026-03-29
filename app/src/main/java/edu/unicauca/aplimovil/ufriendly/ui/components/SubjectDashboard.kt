@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import edu.unicauca.aplimovil.ufriendly.R
-import edu.unicauca.aplimovil.ufriendly.data.Subject
+import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
 
 @Composable
 fun SubjectDashboard(

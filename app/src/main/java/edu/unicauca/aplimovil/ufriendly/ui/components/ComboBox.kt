@@ -18,12 +18,15 @@ import edu.unicauca.aplimovil.ufriendly.R
 @Composable
 fun ComboBox(
     options: List<String>,
-    label: String
+    label: String,
+    placeholder: String = "",
+    onValueChange: (String) -> Unit
+
 ) {
     // State to manage if the menu is expanded or not
     var expanded by remember { mutableStateOf(false) }
     // State to hold the currently selected option
-    var selectedOptionText by remember { mutableStateOf(options[0]) }
+    var selectedOptionText by remember { mutableStateOf("") }
 
     // The container for the TextField and the DropdownMenu
     ExposedDropdownMenuBox(
@@ -43,9 +46,12 @@ fun ComboBox(
             TextField(
                 // The "menuAnchor" modifier helps position the menu correctly
                 //modifier = Modifier.fillMaxWidth(),
-                modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryEditable,true).fillMaxWidth(),
+                modifier = Modifier
+                    .menuAnchor(MenuAnchorType.PrimaryEditable, true)
+                    .fillMaxWidth(),
                 value = selectedOptionText,
-                onValueChange = {},
+                placeholder = {Text(placeholder)},
+                onValueChange = onValueChange,
                 readOnly = true, // Makes the TextField read-only as selections come from the menu
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)

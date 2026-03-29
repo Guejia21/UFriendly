@@ -25,16 +25,19 @@ import edu.unicauca.aplimovil.ufriendly.R
 /**
  * Un contenedor genérico en forma de tarjeta para agrupar campos de formulario.
  * 
+ * @param T El tipo de objeto que este formulario maneja (Subject, Task, etc.)
  * @param title Título opcional para el grupo de campos.
+ * @param itemProvider Una función que construye el objeto T a partir del estado actual del formulario.
+ * @param addNewItem Acción a realizar con el objeto creado al presionar el botón.
  * @param modifier Modificador para ajustar el diseño externo.
- * @param onClick Acciones a realizar al hacer clic en el botón de guardado.
- * @param content Bloque composable que contiene los campos del formulario (TextFields, Switches, etc.).
+ * @param content Bloque composable que contiene los campos del formulario.
  */
 @Composable
-fun FormCard(
+fun <T> FormCard(
     title: String? = null,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
+    itemProvider: () -> T,
+    addNewItem: (T) -> Unit = {},
     buttonLabel: String = stringResource(R.string.save_generic_label),
     content: @Composable ColumnScope.() -> Unit = {}
 ) {
@@ -67,13 +70,13 @@ fun FormCard(
                     .padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.Center
             ) {
-                //TODO Revisar si realmente este boton necesita un isSelected ya que solo se va a presionar una vez
-                //en los botones de filtros si deben quedarse en un estado de seleccionado o no, pero no creo que este tenga ese mismo comportamiento
-                //solo pase var save para que no pusiera errores asi que no está funcionando como antes
                 Button(
                     text = buttonLabel,
-                    onClick = onClick,
-                    isSelected = save ,
+                    onClick = {
+                        val item = itemProvider()
+                        addNewItem(item)
+                    },
+                    isSelected = save,
                     modifier = Modifier.size(width = 200.dp, height = 60.dp)
                 )
             }

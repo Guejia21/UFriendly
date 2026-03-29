@@ -12,24 +12,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import edu.unicauca.aplimovil.ufriendly.R
-import edu.unicauca.aplimovil.ufriendly.data.Subject
-import edu.unicauca.aplimovil.ufriendly.data.Task
+import edu.unicauca.aplimovil.ufriendly.data.entity.Task
+import edu.unicauca.aplimovil.ufriendly.data.repository.TaskRepository
 import edu.unicauca.aplimovil.ufriendly.ui.components.*
 import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
+import edu.unicauca.aplimovil.ufriendly.ui.viewModels.TaskViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun TaskScreen(
-    tasks: List<Task>,
-    navController: NavHostController
+    taskList: List<Task>,
+    navController: NavHostController,
+    onCheckedChange: (Task, Boolean) -> Unit = { _, _ -> },
 ) {
     //Variable para saber que botón está seleccionado
     var filterSelected by remember { mutableStateOf("Pending") }
-    var taskList by remember { mutableStateOf(tasks) }
 
     // Filtrar tareas según selección
     val filteredTasks = when (filterSelected) {
@@ -38,9 +40,10 @@ fun TaskScreen(
         "Expired"  -> taskList.filter { isExpired(it.dueDate) && !it.isDone }
         else       -> taskList
     }
-    //TODO bug: cuando una tarea expirada se completa, no aparece en Done
     // Separar tareas de hoy y próximas
     val todayTasks = filteredTasks.filter { isToday(it.dueDate)}
+    //TODO Revisar la conversión de las fechas porque no las está reconociendo
+    //Ejemplo: Una tarea de hace 10 días no la toma como expirada
     val upcomingTasks = filteredTasks.filter { !isToday(it.dueDate) && !isExpired(it.dueDate)}
     val lateTasks = filteredTasks.filter { isExpired(it.dueDate)}
 
@@ -89,9 +92,7 @@ fun TaskScreen(
                             title = stringResource(R.string.today_label),
                             tasks = todayTasks,
                             onCheckedChange = { task, checked ->
-                                taskList = taskList.map { //Crea una nueva lista cambiando solo la tarea que fue checkeada
-                                    if (it == task) it.copy(isDone = checked) else it
-                                }
+                                onCheckedChange(task, checked)
                             }
                         )
                     }
@@ -104,9 +105,7 @@ fun TaskScreen(
                             title = stringResource(R.string.upcoming_label),
                             tasks = upcomingTasks,
                             onCheckedChange = { task, checked ->
-                                taskList = taskList.map {
-                                    if (it == task) it.copy(isDone = checked) else it
-                                }
+                                onCheckedChange(task, checked)
                             }
                         )
                     }
@@ -118,9 +117,7 @@ fun TaskScreen(
                             title = stringResource(R.string.expired_label),
                             tasks = lateTasks,
                             onCheckedChange = { task, checked ->
-                                taskList = taskList.map {
-                                    if (it == task) it.copy(isDone = checked) else it
-                                }
+                                onCheckedChange(task, checked)
                             }
                         )
                     }
@@ -166,7 +163,7 @@ private fun isExpired(dateStr: String): Boolean {
         taskDate.isBefore(LocalDate.now())
     } catch (e: Exception) { false }
 }
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun TaskScreenPreview() {
@@ -182,4 +179,4 @@ fun TaskScreenPreview() {
     UFriendlyTheme {
         TaskScreen(tasks = tasks, navController = rememberNavController())
     }
-}
+}*/

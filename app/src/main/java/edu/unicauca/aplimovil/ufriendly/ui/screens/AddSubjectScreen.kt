@@ -35,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import edu.unicauca.aplimovil.ufriendly.R
+import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
 import edu.unicauca.aplimovil.ufriendly.ui.components.Button
 import edu.unicauca.aplimovil.ufriendly.ui.components.ColorSelector
 import edu.unicauca.aplimovil.ufriendly.ui.components.DashedBorderButton
@@ -71,9 +72,10 @@ fun AddSubjectScreen(navController: NavHostController){
                 .verticalScroll(rememberScrollState())
         ) {
             //Formulario
-            FormCard (
+            FormCard<Subject> (
                 buttonLabel = stringResource(R.string.save_subject_label),
-                onClick = {/*saveSubject() o algo asi*/}
+                addNewItem = {/*saveSubject() o algo asi*/},
+                itemProvider = { Subject(name=nameSubject, teacher = nameTeacher, score = 0.0, color = "", completionPercentage = 90)}
             ){
                 //nombre materia
                 TextBoxForm(
