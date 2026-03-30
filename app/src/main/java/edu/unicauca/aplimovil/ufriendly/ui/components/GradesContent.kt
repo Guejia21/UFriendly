@@ -8,7 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
+import edu.unicauca.aplimovil.ufriendly.data.entity.Grade
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
+import edu.unicauca.aplimovil.ufriendly.data.relation.GradeWithSubject
 
 /**
  * Contenedor desplazable que lista las tarjetas de calificaciones para cada materia.
@@ -18,7 +20,7 @@ import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
  */
 @Composable
 fun GradesContent(
-    subjects: List<Subject>,
+    grades: List<GradeWithSubject>,
     modifier: Modifier = Modifier
 ){
     LazyColumn(
@@ -26,8 +28,8 @@ fun GradesContent(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(subjects) { subject ->
-            GradeCard(subject = subject)
+        items(grades) { grade ->
+            GradeCard(grade = grade)
         }
     }
 }

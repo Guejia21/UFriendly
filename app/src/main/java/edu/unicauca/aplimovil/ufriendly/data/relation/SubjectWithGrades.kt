@@ -14,5 +14,5 @@ data class SubjectWithGrades(
     @Relation(
         parentColumn = "id",
         entityColumn = "subjectId")
-    val tasks: List<Grade>
+    val grades: List<Grade>
 )

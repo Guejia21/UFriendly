@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import edu.unicauca.aplimovil.ufriendly.data.DashboardState
 import edu.unicauca.aplimovil.ufriendly.data.db.AppDatabase
+import edu.unicauca.aplimovil.ufriendly.data.repository.GradeRepository
 import edu.unicauca.aplimovil.ufriendly.data.repository.SubjectRepository
 import edu.unicauca.aplimovil.ufriendly.data.repository.TaskRepository
 import edu.unicauca.aplimovil.ufriendly.ui.screens.AddGradeScreen
@@ -21,6 +22,7 @@ import edu.unicauca.aplimovil.ufriendly.ui.screens.GradesScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.MainScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.SubjectScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.TaskScreen
+import edu.unicauca.aplimovil.ufriendly.ui.viewModels.GradeViewModel
 import edu.unicauca.aplimovil.ufriendly.ui.viewModels.SubjectViewModel
 import edu.unicauca.aplimovil.ufriendly.ui.viewModels.TaskViewModel
 import java.time.LocalDate
@@ -51,6 +53,9 @@ fun AppNavHost(
     val subjectRepository by lazy { SubjectRepository(database.subjectDao()) }
     val subjectViewModel: SubjectViewModel = viewModel(factory= SubjectViewModel.provideFactory(subjectRepository))
     val subjectUiState by subjectViewModel.uiState.collectAsState()
+    val gradeRepository by lazy { GradeRepository(database.gradeDao()) }
+    val gradeViewModel: GradeViewModel = viewModel(factory= GradeViewModel.provideFactory(gradeRepository))
+    val gradeUiState by gradeViewModel.uiState.collectAsState()
     NavHost(modifier = modifier, navController = navController, startDestination = startDestination) {
 
         composable(route = ScreenName.Home.name) {
@@ -75,7 +80,7 @@ fun AppNavHost(
         }
         composable(route = ScreenName.GradesScreen.name) {
             GradesScreen(
-                subjects = subjectUiState.subjectList,
+                grades = gradeUiState.gradeList,
                 navController = navController
             )
         }
@@ -90,7 +95,11 @@ fun AppNavHost(
             //AddSubjectScreen(navController)
         }
         composable(route = ScreenName.AddGradeScreen.name) {
-            //AddGradeScreen(navController)
+            AddGradeScreen(
+                navController = navController,
+                subjects = subjectUiState.subjectList,
+                addGradeItem = gradeViewModel::addGrade
+            )
         }
     }
 }

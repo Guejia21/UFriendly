@@ -24,5 +24,5 @@ data class Grade (
     val value: Double,
     val weight: Double,
     val date: String,
-    val subjectId: Int
+    val subjectId: Int?,
 )

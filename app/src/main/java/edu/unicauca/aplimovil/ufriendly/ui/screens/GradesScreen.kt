@@ -7,7 +7,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import edu.unicauca.aplimovil.ufriendly.R
+import edu.unicauca.aplimovil.ufriendly.data.entity.Grade
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
+import edu.unicauca.aplimovil.ufriendly.data.relation.GradeWithSubject
 import edu.unicauca.aplimovil.ufriendly.ui.components.GradesContent
 import edu.unicauca.aplimovil.ufriendly.ui.components.TopBar
 import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
@@ -21,14 +23,14 @@ import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
  */
 @Composable
 fun GradesScreen(
-    subjects: List<Subject>,
-    navController: NavHostController
+    grades: List<GradeWithSubject>,
+    navController: NavHostController,
 ){
     GenericScreen(
         navController = navController,
         topBar = { TopBar(stringResource(R.string.grades_label)) }
     ) {
-        GradesContent(subjects)
+        GradesContent(grades)
     }
 }
 

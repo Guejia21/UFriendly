@@ -22,16 +22,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.unicauca.aplimovil.ufriendly.data.entity.Grade
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
+import edu.unicauca.aplimovil.ufriendly.data.relation.GradeWithSubject
 
 
 /**
  * Tarjeta informativa que presenta el resumen de notas de una materia específica.
  * Incluye el nombre de la materia, el promedio parcial y el desglose de evaluaciones.
  *
- * @param subject La materia cuyos datos se mostrarán en la tarjeta.
+ * @param grade La materia y nota cuyos datos se mostrarán en la tarjeta.
  */
 @Composable
-fun GradeCard(subject: Subject) {
+fun GradeCard(grade: GradeWithSubject) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
@@ -40,52 +41,9 @@ fun GradeCard(subject: Subject) {
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-
-            // ── Encabezado: nombre + promedio ─────────────────────────────
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = subject.name,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.scrim,
-                    modifier = Modifier.weight(1f)
-                )
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "Partial score: ",
-                        fontSize = 16.sp,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = String.format("%.1f", subject.score),
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-            //TODO Actualizar a las nuevas entidades, aqui creo que se usa SubjectWithGrades
-            HorizontalDivider(color = MaterialTheme.colorScheme.onSurfaceVariant, thickness = 1.dp)
-            // ── Filas de evaluaciones ─────────────────────────────────────
-//            subject.grades?.forEachIndexed { index, grade ->
-//                GradeRow(grade = grade)
-//                if (index < subject.grades.lastIndex) {
-//                    HorizontalDivider(color = MaterialTheme.colorScheme.onSurfaceVariant, thickness = 0.5.dp)
-//                }
-//            }
-
-        }
+        GradeRow(grade = grade)
     }
 }
-
 
 /**
  * Fila individual que detalla una evaluación específica.
@@ -94,43 +52,74 @@ fun GradeCard(subject: Subject) {
  * @param grade Objeto que contiene los datos de la nota individual.
  */
 @Composable
-fun GradeRow(grade: Grade) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        // Nombre de la evaluación (Izquierda)
-        Text(
-            text = grade.name,
-            fontSize = 14.sp,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            fontWeight = FontWeight.Medium,
-            modifier = Modifier.weight(1f)
-        )
-
-        // Peso (Centro)
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.weight(1f)
+fun GradeRow(grade: GradeWithSubject) {
+    Column(modifier = Modifier.padding(16.dp)){
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "Weight:", fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Medium)
-            Text(text = "${grade.weight*100}%", fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Medium)
-        }
-
-        // Calificación (Derecha)
-        Column(
-            horizontalAlignment = Alignment.End,
-            modifier = Modifier.weight(1f)
-        ) {
-            Text(text = "Value:", fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Bold)
             Text(
-                text = String.format("%.1f", grade.value),
-                fontSize = 14.sp,
+                text = grade.subject?.name ?: "Unknown Subject", //esto por ahora, para ver si funciona la bd
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.Black
+                color = MaterialTheme.colorScheme.scrim,
+                modifier = Modifier.weight(1f)
             )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = "Partial score: ",
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = String.format("%.1f", grade.subject?.score ?: 0.0),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,)
+            }
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        HorizontalDivider(color = MaterialTheme.colorScheme.onSurfaceVariant, thickness = 1.dp)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Nombre de la evaluación (Izquierda)
+            Text(
+                text = grade.grade.name,
+                fontSize = 14.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.weight(1f)
+            )
+
+            // Peso (Centro)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Weight:", fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Medium)
+                Text(text = "${grade.grade.weight*100}%", fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Medium)
+            }
+
+            // Calificación (Derecha)
+            Column(
+                horizontalAlignment = Alignment.End,
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Value:", fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Bold)
+                Text(
+                    text = String.format("%.1f", grade.grade.value),
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+                )
+            }
         }
     }
+
 }
