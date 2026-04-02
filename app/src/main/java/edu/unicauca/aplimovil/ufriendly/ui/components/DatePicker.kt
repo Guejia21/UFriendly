@@ -22,6 +22,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,6 +39,7 @@ import edu.unicauca.aplimovil.ufriendly.R
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 /*
 Function taken from "https://developer.android.com/develop/ui/compose/components/datepickers"
@@ -50,6 +52,12 @@ fun DatePickerDocked(
     onValueChange: (String) -> Unit
 ) {
     var showDatePicker by remember { mutableStateOf(false) }
+    // Close the picker automatically when a date is selected
+    LaunchedEffect(datePickerState.selectedDateMillis) {
+        if (showDatePicker) {
+            showDatePicker = false
+        }
+    }
 
     Box(
         modifier = Modifier.fillMaxWidth()
@@ -63,7 +71,9 @@ fun DatePickerDocked(
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = value,
-                onValueChange = {onValueChange(it)},
+                onValueChange = {
+                    onValueChange(it)
+                    },
                 placeholder = { Text("Ex: 01/01/2023") },
                 readOnly = true,
                 trailingIcon = {
@@ -123,6 +133,7 @@ fun DatePickerDocked(
 //}
 
 fun convertMillisToDate(millis: Long): String {
-    val formatter = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+    val formatter = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())    // Set the formatter to UTC to match the DatePicker's output
+    formatter.timeZone = TimeZone.getTimeZone("UTC")
     return formatter.format(Date(millis))
 }

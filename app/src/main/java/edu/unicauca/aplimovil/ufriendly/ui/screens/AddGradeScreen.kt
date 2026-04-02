@@ -73,15 +73,17 @@ fun AddGradeScreen(
                     label = "Value",
                     placeholder = "Ex: 4.5",
                     value = valueGrade.toString(),
-                    onValueChange = { newText -> valueGrade = newText.toDoubleOrNull() ?: 0.0}
+                    onValueChange = { newText -> valueGrade = newText.toDouble()},
+                    isNumberField = true
                 )
-                //TODO Cambiar el tipo de input para que acepte solo números !!!!
+                //TODO Si pongo un punto se estalla la aplicación !!!!
                 //Peso de la calificación
                 TextBoxForm(
                     label = "Weight",
                     placeholder = "Ex: 0.35",
                     value = weightGrade.toString(),
-                    onValueChange = { newText -> weightGrade = newText.toDouble() }
+                    onValueChange = { newText -> weightGrade = newText.toDouble() },
+                    isNumberField = true
                 )
 
                 //fecha

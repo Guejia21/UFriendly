@@ -3,6 +3,7 @@ package edu.unicauca.aplimovil.ufriendly.ui.components
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -10,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
 /**
@@ -22,7 +24,7 @@ import androidx.compose.ui.unit.dp
  * @param onValueChange Callback que se dispara cada vez que el usuario modifica el texto.
  */
 @Composable
-fun TextBoxForm(label: String, placeholder: String, value: String, onValueChange: (String) -> Unit){
+fun TextBoxForm(label: String, placeholder: String, value: String,isNumberField: Boolean = false, onValueChange: (String) -> Unit){
     Text(
         text = label,
         color = MaterialTheme.colorScheme.primary,
@@ -37,6 +39,7 @@ fun TextBoxForm(label: String, placeholder: String, value: String, onValueChange
             unfocusedBorderColor = MaterialTheme.colorScheme.primary,
             focusedBorderColor = MaterialTheme.colorScheme.primary,
         ),
-        singleLine = true
+        singleLine = true,
+        keyboardOptions = if(isNumberField) KeyboardOptions(keyboardType = KeyboardType.Number) else KeyboardOptions.Default
     )
 }
