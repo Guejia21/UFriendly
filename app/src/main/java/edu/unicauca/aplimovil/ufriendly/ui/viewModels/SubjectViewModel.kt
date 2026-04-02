@@ -40,9 +40,9 @@ class SubjectViewModel(private val repository: SubjectRepository): ViewModel(){
         }
     }
 
-    fun insertCompleteSubject(subject: Subject, classSchedule: List<ClassSchedule>){
+    fun insertCompleteSubject(subject: SubjectWithSchedules){
         viewModelScope.launch {
-            repository.insertSubjectWithSchedules(subject, classSchedule)
+            repository.insertSubjectWithSchedules(subject.subject, subject.classSchedules)
         }
     }
     companion object{

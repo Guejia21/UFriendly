@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import edu.unicauca.aplimovil.ufriendly.ui.components.TopBar
 import edu.unicauca.aplimovil.ufriendly.R
+import edu.unicauca.aplimovil.ufriendly.data.SaveableItem
 import edu.unicauca.aplimovil.ufriendly.data.entity.Grade
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
 import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
@@ -50,16 +51,16 @@ fun AddGradeScreen(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
         ) {
-            FormCard<Grade>(
+            FormCard(
                 buttonLabel = stringResource(R.string.save_grade_label),
-                itemProvider = { Grade(
+                itemToSave =  Grade(
                     name=nameGrade,
                     value = valueGrade,
                     weight = weightGrade,
                     date = selectedDate,
                     subjectId = gradeSubjectId,
-                )},
-                addNewItem = addGradeItem
+                ),
+                addNewItem = addGradeItem as (SaveableItem) -> Unit
             ){
                 //Nombre calificación
                 TextBoxForm(

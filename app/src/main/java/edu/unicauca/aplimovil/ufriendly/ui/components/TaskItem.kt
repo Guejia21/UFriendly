@@ -53,8 +53,9 @@ fun TaskItem(
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurface
                 )
+                //TODO Inlcuir el nombre de la materia si es el caso
                 Text(
-                    text = "${task.subjectId} - ${task.dueDate}",
+                    text = "${task.subjectId?:"No subject"} - ${task.dueDate}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

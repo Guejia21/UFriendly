@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import edu.unicauca.aplimovil.ufriendly.R
+import edu.unicauca.aplimovil.ufriendly.data.SaveableItem
 
 /**
  * Un contenedor genérico en forma de tarjeta para agrupar campos de formulario.
@@ -33,11 +34,11 @@ import edu.unicauca.aplimovil.ufriendly.R
  * @param content Bloque composable que contiene los campos del formulario.
  */
 @Composable
-fun <T> FormCard(
+fun FormCard(
     title: String? = null,
     modifier: Modifier = Modifier,
-    itemProvider: () -> T,
-    addNewItem: (T) -> Unit = {},
+    itemToSave: SaveableItem,
+    addNewItem: (SaveableItem) -> Unit = {},
     buttonLabel: String = stringResource(R.string.save_generic_label),
     content: @Composable ColumnScope.() -> Unit = {}
 ) {
@@ -73,9 +74,9 @@ fun <T> FormCard(
                 Button(
                     text = buttonLabel,
                     onClick = {
-                        val item = itemProvider()
-                        addNewItem(item)
+                        addNewItem(itemToSave)
                     },
+                    enabled = itemToSave.isValid(),
                     isSelected = save,
                     modifier = Modifier.size(width = 200.dp, height = 60.dp)
                 )

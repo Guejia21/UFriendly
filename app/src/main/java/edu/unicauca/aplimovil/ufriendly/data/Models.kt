@@ -6,3 +6,6 @@ data class DashboardState(
     val doneCount: Int,
     val expiredCount: Int
 )
+interface SaveableItem{
+    fun isValid(): Boolean
+}

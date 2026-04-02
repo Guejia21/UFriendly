@@ -16,6 +16,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import edu.unicauca.aplimovil.ufriendly.R
+import edu.unicauca.aplimovil.ufriendly.data.SaveableItem
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
 import edu.unicauca.aplimovil.ufriendly.data.entity.Task
 import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
@@ -51,10 +52,10 @@ fun AddTaskScreen(
         topBar = { TopBar(stringResource(R.string.add_task_label)) },
     )
     {
-        FormCard<Task>(
+        FormCard(
             buttonLabel = stringResource(R.string.save_task_label),
-            itemProvider = { Task(name=taskName, description =  taskDescription, dueDate = selectedDate, subjectId = taskSubjectId) },
-            addNewItem = addTaskItem
+            itemToSave = Task(name=taskName, description =  taskDescription, dueDate = selectedDate, subjectId = taskSubjectId),
+            addNewItem = addTaskItem as (SaveableItem) -> Unit
         ){
             TextBoxForm(
                 label = "Name",

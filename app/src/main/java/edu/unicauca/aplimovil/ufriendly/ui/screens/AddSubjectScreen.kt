@@ -36,8 +36,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import edu.unicauca.aplimovil.ufriendly.R
+import edu.unicauca.aplimovil.ufriendly.data.SaveableItem
 import edu.unicauca.aplimovil.ufriendly.data.entity.ClassSchedule
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
+import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
 import edu.unicauca.aplimovil.ufriendly.ui.components.Button
 import edu.unicauca.aplimovil.ufriendly.ui.components.ColorSelector
 import edu.unicauca.aplimovil.ufriendly.ui.components.DashedBorderButton
@@ -57,7 +59,7 @@ import edu.unicauca.aplimovil.ufriendly.ui.components.ScheduleSheet
 @Composable
 fun AddSubjectScreen(
     navController: NavHostController,
-    addSubjectItem: (Subject, List<ClassSchedule>) -> Unit
+    addSubjectItem: (SubjectWithSchedules) -> Unit
 ){
     //TODO Cambiar los estados a un ViewModel
     // Estados para los campos del formulario
@@ -81,15 +83,15 @@ fun AddSubjectScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             //Formulario
-            FormCard<Pair<Subject, List<ClassSchedule>>> (
+            FormCard(
                 buttonLabel = stringResource(R.string.save_subject_label),
-                itemProvider = {
-                    val subject = Subject(
+                itemToSave = SubjectWithSchedules(
+                    subject = Subject(
                         name=nameSubject,
                         teacher = nameTeacher,
                         color = "",
-                    )
-                    val classSchedules = schedules.map { (day, startHour, endHour) ->
+                    ),
+                    classSchedules = schedules.map { (day, startHour, endHour) ->
                         ClassSchedule(
                             day = day,
                             startHour = startHour,
@@ -97,11 +99,8 @@ fun AddSubjectScreen(
                             subjectId = classScheduleSubjectId
                         )
                     }
-                    Pair(subject, classSchedules)
-                },
-                addNewItem = {(subject, schedules) ->
-                    addSubjectItem(subject, schedules)
-                }
+                ),
+                addNewItem = addSubjectItem as (SaveableItem) -> Unit
             ){
                 //nombre materia
                 TextBoxForm(

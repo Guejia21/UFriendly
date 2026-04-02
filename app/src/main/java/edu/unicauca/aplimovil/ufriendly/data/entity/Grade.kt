@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import edu.unicauca.aplimovil.ufriendly.data.SaveableItem
 import java.sql.Date
 
 @Entity(
@@ -25,4 +26,8 @@ data class Grade (
     val weight: Double,
     val date: String,
     val subjectId: Int?,
-)
+): SaveableItem{
+    override fun isValid(): Boolean {
+        return name.isNotBlank() && value > 0.0 && weight > 0.0 && date.isNotBlank()
+    }
+}

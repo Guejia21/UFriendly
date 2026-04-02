@@ -91,9 +91,7 @@ fun AppNavHost(
         composable(route = ScreenName.AddSubjectScreen.name) {
             AddSubjectScreen(
                 navController,
-                addSubjectItem = {subject, schedules ->
-                    subjectViewModel.insertCompleteSubject(subject, schedules)
-                }
+                addSubjectItem = subjectViewModel::insertCompleteSubject
             )
         }
         composable(route = ScreenName.AddGradeScreen.name) {
