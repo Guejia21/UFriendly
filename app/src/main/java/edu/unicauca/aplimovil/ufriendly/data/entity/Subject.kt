@@ -9,7 +9,7 @@ data class Subject (
     val id: Int = 0,
     val name: String,
     val teacher: String,
-    val score: Double, // Se calcula a partir de las notas
-    val completionPercentage: Int,
+    val score: Double = 0.0, // Se calcula a partir de las notas
+    val completionPercentage: Int = 0,
     val color: String
 )

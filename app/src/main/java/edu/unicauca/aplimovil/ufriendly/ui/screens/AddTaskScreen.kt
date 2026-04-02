@@ -18,6 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import edu.unicauca.aplimovil.ufriendly.R
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
 import edu.unicauca.aplimovil.ufriendly.data.entity.Task
+import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
 import edu.unicauca.aplimovil.ufriendly.data.repository.SubjectRepository
 import edu.unicauca.aplimovil.ufriendly.data.repository.TaskRepository
 import edu.unicauca.aplimovil.ufriendly.ui.components.ComboBox
@@ -33,9 +34,9 @@ import edu.unicauca.aplimovil.ufriendly.ui.viewModels.TaskViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddTaskScreen(
-        navController: NavHostController,
-        subjects: List<Subject>,
-        addTaskItem: (Task) -> Unit = {},
+    navController: NavHostController,
+    subjects: List<SubjectWithSchedules>,
+    addTaskItem: (Task) -> Unit = {},
     ){
     var taskName by remember { mutableStateOf("") }
     var taskDescription by remember { mutableStateOf("") }
@@ -73,10 +74,12 @@ fun AddTaskScreen(
                 datePickerState = datePickerState,
             )
             ComboBox(
-                options = subjects.map { it.name },
+                options = subjects.map { it.subject.name },
                 label = stringResource(R.string.subject_label),
                 placeholder = stringResource(R.string.select_subject_label),
-                onValueChange = {newText -> taskSubjectId = subjects.find { it.name == newText }?.id}
+                onValueChange = {newText -> taskSubjectId =
+                    subjects.find { it.subject.name == newText }?.subject?.id
+                }
             )
         }
     }

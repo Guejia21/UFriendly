@@ -27,6 +27,7 @@ import edu.unicauca.aplimovil.ufriendly.ui.components.TextBoxForm
 import edu.unicauca.aplimovil.ufriendly.ui.components.TopBar
 import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.keepScreenOn
@@ -35,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import edu.unicauca.aplimovil.ufriendly.R
+import edu.unicauca.aplimovil.ufriendly.data.entity.ClassSchedule
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
 import edu.unicauca.aplimovil.ufriendly.ui.components.Button
 import edu.unicauca.aplimovil.ufriendly.ui.components.ColorSelector
@@ -53,11 +55,18 @@ import edu.unicauca.aplimovil.ufriendly.ui.components.ScheduleSheet
  * - Color identificativo para la materia.
  */
 @Composable
-fun AddSubjectScreen(navController: NavHostController){
+fun AddSubjectScreen(
+    navController: NavHostController,
+    addSubjectItem: (Subject, List<ClassSchedule>) -> Unit
+){
     //TODO Cambiar los estados a un ViewModel
     // Estados para los campos del formulario
     var nameSubject by remember { mutableStateOf("") }
     var nameTeacher by remember { mutableStateOf("") }
+    var day by remember { mutableStateOf("") }
+    var startHour by remember { mutableStateOf("") }
+    var endHour by remember { mutableStateOf("") }
+    var classScheduleSubjectId by remember { mutableIntStateOf(0) }
     var selectedDays by remember { mutableStateOf(setOf<String>())}
     var selectedColor by remember { mutableStateOf<Color?>(null) }
     var showSheet by remember { mutableStateOf(false) }
@@ -65,17 +74,34 @@ fun AddSubjectScreen(navController: NavHostController){
     
     GenericScreen(
         navController = navController,
-        topBar = { TopBar("Add Subject") },
+        topBar = { TopBar(stringResource(R.string.add_subject_label)) },
     ) {
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
         ) {
             //Formulario
-            FormCard<Subject> (
+            FormCard<Pair<Subject, List<ClassSchedule>>> (
                 buttonLabel = stringResource(R.string.save_subject_label),
-                addNewItem = {/*saveSubject() o algo asi*/},
-                itemProvider = { Subject(name=nameSubject, teacher = nameTeacher, score = 0.0, color = "", completionPercentage = 90)}
+                itemProvider = {
+                    val subject = Subject(
+                        name=nameSubject,
+                        teacher = nameTeacher,
+                        color = "",
+                    )
+                    val classSchedules = schedules.map { (day, startHour, endHour) ->
+                        ClassSchedule(
+                            day = day,
+                            startHour = startHour,
+                            endHour = endHour,
+                            subjectId = classScheduleSubjectId
+                        )
+                    }
+                    Pair(subject, classSchedules)
+                },
+                addNewItem = {(subject, schedules) ->
+                    addSubjectItem(subject, schedules)
+                }
             ){
                 //nombre materia
                 TextBoxForm(
@@ -90,12 +116,12 @@ fun AddSubjectScreen(navController: NavHostController){
                     text = "Class schedules",
                     color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Bold)
-                schedules.forEach { (day, start, end) ->
+                    schedules.forEach { (day, startHour, endHour) ->
                     ScheduleCard(
                         day = day,
-                        hourStart = start,
-                        hourEnd = end,
-                        onDelete = { schedules = schedules - Triple(day, start, end) }
+                        startHour = startHour,
+                        endHour = endHour,
+                        onDelete = { schedules = schedules - Triple(day, startHour, endHour) }
                     )
                     Spacer(Modifier.height(7.dp))
                 }
@@ -119,8 +145,8 @@ fun AddSubjectScreen(navController: NavHostController){
             if(showSheet){
                 ScheduleSheet(
                     onDismiss = { showSheet = false },
-                    onConfirm = { day, start, end ->
-                        schedules = schedules + Triple(day, start, end)
+                    onConfirm = { day, startHour, endHour ->
+                        schedules = schedules + Triple(day, startHour, endHour)
                         showSheet = false
                     }
                 )
@@ -130,10 +156,10 @@ fun AddSubjectScreen(navController: NavHostController){
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun AddSubjectScreenPreview(){
-    UFriendlyTheme {
-        AddSubjectScreen(navController = rememberNavController())
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun AddSubjectScreenPreview(){
+//    UFriendlyTheme {
+//        AddSubjectScreen(navController = rememberNavController())
+//    }
+//}

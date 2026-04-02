@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
+import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
 
 /**
  * Componente que muestra la información detallada de una materia en una tarjeta (Card).
@@ -26,7 +27,7 @@ import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
  * @param subject Objeto de tipo [Subject] que contiene los datos de la materia a mostrar.
  */
 @Composable
-fun SubjectFullCard(subject: Subject){
+fun SubjectFullCard(subject: SubjectWithSchedules){
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -48,19 +49,19 @@ fun SubjectFullCard(subject: Subject){
                 modifier = Modifier.weight(1f)
             ){
                 Text(
-                    text = subject.name,
+                    text = subject.subject.name,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 //TODO Manejar con SubjectWithClassDates
                 //subject.classDates.forEach { classDate -> Text(text = classDate) }
-                Text(text = "Mr. ${subject.teacher}")
+                Text(text = "Mr. ${subject.subject.teacher}")
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Score: ${subject.score}",
+                    text = "Score: ${subject.subject.score}",
                     fontSize = 18.sp
                 )
             }
@@ -71,7 +72,7 @@ fun SubjectFullCard(subject: Subject){
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "${subject.completionPercentage}%",
+                    text = "${subject.subject.completionPercentage}%",
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold
                 )

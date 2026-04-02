@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import edu.unicauca.aplimovil.ufriendly.data.dao.ClassScheduleDao
 import edu.unicauca.aplimovil.ufriendly.data.dao.SubjectDao
 import edu.unicauca.aplimovil.ufriendly.data.dao.TaskDao
 import edu.unicauca.aplimovil.ufriendly.data.dao.GradeDao
@@ -25,6 +26,9 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun subjectDao(): SubjectDao
     abstract fun taskDao(): TaskDao
     abstract fun gradeDao(): GradeDao
+
+    abstract fun classScheduleDao(): ClassScheduleDao
+
 
     companion object{
         @Volatile

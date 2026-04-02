@@ -40,13 +40,16 @@ interface SubjectDao {
 
     //COMMANDS
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSubject(subject: Subject)
+    suspend fun insertSubject(subject: Subject): Long
+
     @Update
     suspend fun updateSubject(subject: Subject)
     @Delete
     suspend fun deleteSubject(subject: Subject)
 
-
+    @Transaction
+    @Query("SELECT id FROM subject ORDER BY id DESC LIMIT 1")
+    fun getLastSubjectId(): Int
 }
 
 

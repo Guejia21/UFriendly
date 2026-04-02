@@ -13,5 +13,5 @@ data class SubjectWithSchedules(
     @Relation(
         parentColumn = "id",
         entityColumn = "subjectId")
-    val tasks: List<ClassSchedule>
+    val classSchedules: List<ClassSchedule>
 )

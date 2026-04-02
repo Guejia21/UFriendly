@@ -3,10 +3,10 @@ package edu.unicauca.aplimovil.ufriendly.ui.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import edu.unicauca.aplimovil.ufriendly.data.entity.ClassSchedule
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
-import edu.unicauca.aplimovil.ufriendly.data.entity.Task
+import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
 import edu.unicauca.aplimovil.ufriendly.data.repository.SubjectRepository
-import edu.unicauca.aplimovil.ufriendly.data.repository.TaskRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -14,10 +14,10 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 data class SubjectUiState(
-    val subjectList: List<Subject> = emptyList()
+    val subjectList: List<SubjectWithSchedules> = emptyList()
 )
 class SubjectViewModel(private val repository: SubjectRepository): ViewModel(){
-    val  uiState: StateFlow<SubjectUiState> = repository.allSubjects
+    val  uiState: StateFlow<SubjectUiState> = repository.allSubjectsWithSchedules
         .map { SubjectUiState(it) }
         .stateIn(
             scope = viewModelScope,
@@ -37,6 +37,12 @@ class SubjectViewModel(private val repository: SubjectRepository): ViewModel(){
     fun deleteSubject(subject: Subject){
         viewModelScope.launch {
             repository.delete(subject)
+        }
+    }
+
+    fun insertCompleteSubject(subject: Subject, classSchedule: List<ClassSchedule>){
+        viewModelScope.launch {
+            repository.insertSubjectWithSchedules(subject, classSchedule)
         }
     }
     companion object{

@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
+import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
 import edu.unicauca.aplimovil.ufriendly.ui.components.SearchBar
 import edu.unicauca.aplimovil.ufriendly.ui.components.TopBar
 import edu.unicauca.aplimovil.ufriendly.ui.components.Button
@@ -33,7 +34,7 @@ import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
  */
 @Composable
 fun SubjectScreen(
-    subjects: List<Subject>,
+    subjects: List<SubjectWithSchedules>,
     navController: NavHostController,
 ) {
     val textSearch = remember { mutableStateOf("") }
@@ -76,11 +77,11 @@ fun SubjectScreen(
             }
             // Contenido principal - Materias
             if (mostrarCursando) {
-                subjects.filter { it.completionPercentage < 100 }.take(5).forEach { subject ->
+                subjects.filter { it.subject.completionPercentage < 100 }.take(5).forEach { subject ->
                     SubjectFullCard(subject)
                 }
             }else{
-                subjects.filter { it.completionPercentage == 100 }.take(5).forEach { subject ->
+                subjects.filter { it.subject.completionPercentage == 100 }.take(5).forEach { subject ->
                     SubjectFullCard(subject)
                 }
             }

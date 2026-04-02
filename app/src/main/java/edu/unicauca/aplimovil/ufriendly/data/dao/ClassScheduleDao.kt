@@ -26,6 +26,8 @@ interface ClassScheduleDao {
     @Delete
     suspend fun delete(item: ClassSchedule)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSchedules(schedules: List<ClassSchedule>)
 }
 
 

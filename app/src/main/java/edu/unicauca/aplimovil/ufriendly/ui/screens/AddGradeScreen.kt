@@ -18,6 +18,7 @@ import edu.unicauca.aplimovil.ufriendly.ui.components.TopBar
 import edu.unicauca.aplimovil.ufriendly.R
 import edu.unicauca.aplimovil.ufriendly.data.entity.Grade
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
+import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
 import edu.unicauca.aplimovil.ufriendly.ui.components.ComboBox
 import edu.unicauca.aplimovil.ufriendly.ui.components.DatePickerDocked
 import edu.unicauca.aplimovil.ufriendly.ui.components.FormCard
@@ -29,7 +30,7 @@ import kotlin.collections.map
 @Composable
 fun AddGradeScreen(
     navController: NavHostController,
-    subjects: List<Subject>,
+    subjects: List<SubjectWithSchedules>,
     addGradeItem: (Grade) -> Unit = {}
 ){
     var nameGrade by remember { mutableStateOf("") }
@@ -95,10 +96,12 @@ fun AddGradeScreen(
 
                 //Materia asociada
                 ComboBox(
-                    options = subjects.map { it.name },
+                    options = subjects.map { it.subject.name },
                     label = stringResource(R.string.subject_label),
                     placeholder = stringResource(R.string.select_subject_label),
-                    onValueChange = {newText -> gradeSubjectId = subjects.find { it.name == newText }?.id}
+                    onValueChange = {newText -> gradeSubjectId =
+                        subjects.find { it.subject.name == newText }?.subject?.id ///cambiar
+                    }
                 )
             }
         }

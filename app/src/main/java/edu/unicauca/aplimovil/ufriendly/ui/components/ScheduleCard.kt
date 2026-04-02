@@ -32,8 +32,8 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun ScheduleCard(
     day: String,
-    hourStart: String,
-    hourEnd: String,
+    startHour: String,
+    endHour: String,
     onDelete: () -> Unit
 ) {
     Row(
@@ -65,7 +65,7 @@ fun ScheduleCard(
         // Horas
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = "$hourStart – $hourEnd",
+                text = "$startHour – $endHour",
                 fontSize = 13.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onSurface

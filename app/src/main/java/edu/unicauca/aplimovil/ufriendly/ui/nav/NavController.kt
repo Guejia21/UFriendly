@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -25,8 +24,6 @@ import edu.unicauca.aplimovil.ufriendly.ui.screens.TaskScreen
 import edu.unicauca.aplimovil.ufriendly.ui.viewModels.GradeViewModel
 import edu.unicauca.aplimovil.ufriendly.ui.viewModels.SubjectViewModel
 import edu.unicauca.aplimovil.ufriendly.ui.viewModels.TaskViewModel
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import kotlin.getValue
 
 enum class ScreenName{
@@ -50,7 +47,7 @@ fun AppNavHost(
     val taskViewModel: TaskViewModel = viewModel(factory= TaskViewModel.provideFactory(taskRepository))
     val taskUiState by taskViewModel.uiState.collectAsState()
     val state = DashboardState("Jhoan Chacon",1,2,2)
-    val subjectRepository by lazy { SubjectRepository(database.subjectDao()) }
+    val subjectRepository by lazy { SubjectRepository(database.subjectDao(), database.classScheduleDao()) }
     val subjectViewModel: SubjectViewModel = viewModel(factory= SubjectViewModel.provideFactory(subjectRepository))
     val subjectUiState by subjectViewModel.uiState.collectAsState()
     val gradeRepository by lazy { GradeRepository(database.gradeDao()) }
@@ -92,7 +89,12 @@ fun AppNavHost(
             )
         }
         composable(route = ScreenName.AddSubjectScreen.name) {
-            //AddSubjectScreen(navController)
+            AddSubjectScreen(
+                navController,
+                addSubjectItem = {subject, schedules ->
+                    subjectViewModel.insertCompleteSubject(subject, schedules)
+                }
+            )
         }
         composable(route = ScreenName.AddGradeScreen.name) {
             AddGradeScreen(

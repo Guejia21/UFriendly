@@ -18,10 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
+import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
+import kotlin.concurrent.schedule
 
 @Composable
 fun SubjectCard(
-    subject: Subject,
+    subject: SubjectWithSchedules,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -37,7 +39,7 @@ fun SubjectCard(
         ) {
             // El valor 1f en weigth maneja adecuadamente los nombres muy largos
             Text(
-                text = subject.name,
+                text = subject.subject.name,
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier.weight(1f)
@@ -54,15 +56,15 @@ fun SubjectCard(
                     tint = MaterialTheme.colorScheme.primary
                 )
                 //TODO Trabajar con SubjectWithClassDates
-//                Column {
-//                    subject.classDates.forEach { date ->
-//                        Text(
-//                            text = date,
-//                            style = MaterialTheme.typography.labelLarge,
-//                            color = MaterialTheme.colorScheme.onSurfaceVariant
-//                        )
-//                    }
-//                }
+                Column {
+                    subject.classSchedules.forEach { schedule ->
+                        Text(
+                            text = "${schedule.day}: ${schedule.startHour} - ${schedule.endHour}",
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
             }
         }
     }
