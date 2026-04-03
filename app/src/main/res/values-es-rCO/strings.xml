@@ -25,4 +25,6 @@
     <string name="save_grade_label">Guardar calificación</string>
     <string name="date_label">Fecha</string>
     <string name="subject_label">Materia</string>
+    <string name="select_subject_label">Seleccionar materia</string>
+    <string name="task_detail_label">Detalle de tarea</string>
 </resources>
