@@ -24,7 +24,6 @@ import kotlin.concurrent.schedule
 @Composable
 fun SubjectCard(
     subject: SubjectWithSchedules,
-    modifier: Modifier = Modifier
 ) {
     Surface(
         shape = MaterialTheme.shapes.medium,

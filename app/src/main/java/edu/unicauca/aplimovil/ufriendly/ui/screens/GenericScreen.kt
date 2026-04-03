@@ -5,14 +5,14 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
@@ -23,20 +23,28 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import edu.unicauca.aplimovil.ufriendly.R
 import edu.unicauca.aplimovil.ufriendly.ui.components.BottomBar
 import edu.unicauca.aplimovil.ufriendly.ui.components.FabMenuItem
 import edu.unicauca.aplimovil.ufriendly.ui.nav.ScreenName
+import kotlinx.coroutines.delay
 
 
 @Composable
@@ -46,6 +54,21 @@ fun GenericScreen(
     content: @Composable BoxScope.() -> Unit
 ){
     var isFabExpanded by remember { mutableStateOf(false) }
+
+    // Observe the success message as a State to trigger recomposition when it changes
+    val successMessage by navController.currentBackStackEntry
+        ?.savedStateHandle
+        ?.getStateFlow<String?>("success_message", null)
+        ?.collectAsState() ?: remember { mutableStateOf<String?>(null) }
+
+    // Remove the message after 3 seconds
+    LaunchedEffect(successMessage) {
+        if (successMessage != null) {
+            delay(3000)
+            navController.currentBackStackEntry?.savedStateHandle?.set("success_message", null)
+        }
+    }
+
     Scaffold(
         containerColor = MaterialTheme.colorScheme.primaryContainer,
         topBar = topBar,
@@ -57,14 +80,40 @@ fun GenericScreen(
                     contentDescription = "Add new entry"
                 )
             }
-        }
+        },
+        modifier = Modifier.fillMaxSize()
+
     ) { innerPadding ->
         Box(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
+            // Custom Success Message at the top
+            AnimatedVisibility(
+                visible = successMessage != null,
+                enter = slideInVertically(initialOffsetY = { -it }) + fadeIn(),
+                exit = slideOutVertically(targetOffsetY = { -it }) + fadeOut(),
+                modifier = Modifier.zIndex(1f) // Ensure it appears above other elements
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color(0xFF4CAF50)) // Green background
+                        .padding(12.dp)
+                ) {
+                    Text(
+                        text = successMessage ?: "",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            }
+
             content()
+
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
@@ -97,4 +146,3 @@ fun GenericScreen(
         }
     }
 }
-

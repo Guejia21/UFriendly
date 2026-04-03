@@ -49,7 +49,13 @@ fun AddTaskScreen(
                 dueDate = datePickerState.selectedDateMillis?.let { Date(it) },
                 subjectId = taskSubjectId
             ),
-            addNewItem = addTaskItem as (SaveableItem) -> Unit
+            addNewItem = addTaskItem as (SaveableItem) -> Unit,
+            afterSave = {
+                navController.previousBackStackEntry
+                    ?.savedStateHandle
+                    ?.set("success_message", "Task saved successfully")
+                navController.popBackStack()
+            }
         ){
             TextBoxForm(
                 label = "Name",

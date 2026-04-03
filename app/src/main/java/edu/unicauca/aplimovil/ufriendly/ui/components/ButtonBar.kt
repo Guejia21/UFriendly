@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.filled.Book
+import androidx.compose.material.icons.filled.Grade
+import androidx.compose.material.icons.filled.TaskAlt
 import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.MailOutline
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -40,24 +40,24 @@ fun BottomBar(navController: NavHostController) {
         )
         IconButton(
             label = stringResource(R.string.subjects_label),
-            icon = Icons.Rounded.MailOutline,
+            icon = Icons.Default.Book,
             contentDescription = stringResource(R.string.subjects_label),
             onClick = { navController.navigate(ScreenName.SubjectScreen.name) },
             isSelected = currentRoute == ScreenName.SubjectScreen.name || currentRoute == ScreenName.AddSubjectScreen.name
         )
         IconButton(
             label = stringResource(R.string.task_label),
-            icon = Icons.Rounded.Check,
+            icon = Icons.Default.TaskAlt,
             contentDescription = stringResource(R.string.task_label),
             onClick = { navController.navigate(ScreenName.TaskScreen.name) },
-            isSelected = currentRoute == ScreenName.TaskScreen.name
+            isSelected = currentRoute == ScreenName.TaskScreen.name || currentRoute == ScreenName.AddTaskScreen.name
         )
         IconButton(
             label = stringResource(R.string.grades_label),
-            icon = Icons.Rounded.Edit,
+            icon = Icons.Default.Grade,
             contentDescription = stringResource(R.string.grades_label),
             onClick = { navController.navigate(ScreenName.GradesScreen.name) },
-            isSelected = currentRoute == ScreenName.GradesScreen.name
+            isSelected = currentRoute == ScreenName.GradesScreen.name || currentRoute == ScreenName.AddGradeScreen.name
         )
     }
 }

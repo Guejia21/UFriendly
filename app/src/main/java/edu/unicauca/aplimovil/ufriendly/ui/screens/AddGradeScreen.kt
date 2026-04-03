@@ -7,7 +7,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -18,14 +17,13 @@ import edu.unicauca.aplimovil.ufriendly.ui.components.TopBar
 import edu.unicauca.aplimovil.ufriendly.R
 import edu.unicauca.aplimovil.ufriendly.data.SaveableItem
 import edu.unicauca.aplimovil.ufriendly.data.entity.Grade
-import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
 import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
 import edu.unicauca.aplimovil.ufriendly.ui.components.ComboBox
 import edu.unicauca.aplimovil.ufriendly.ui.components.DatePickerDocked
 import edu.unicauca.aplimovil.ufriendly.ui.components.FormCard
 import edu.unicauca.aplimovil.ufriendly.ui.components.TextBoxForm
 import edu.unicauca.aplimovil.ufriendly.ui.components.convertMillisToDate
-import kotlin.collections.map
+import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,11 +33,11 @@ fun AddGradeScreen(
     addGradeItem: (Grade) -> Unit = {}
 ){
     var nameGrade by remember { mutableStateOf("") }
-    var valueGrade by remember { mutableDoubleStateOf(0.0) }
-    var weightGrade by remember { mutableDoubleStateOf(0.0) }
+    var valueGrade by remember { mutableStateOf("") }
+    var weightGrade by remember { mutableStateOf("") }
     val datePickerState = rememberDatePickerState()
     var gradeSubjectId by remember  { mutableStateOf<Int?>(null) }
-    var selectedDate = datePickerState.selectedDateMillis?.let {
+    val selectedDateStr = datePickerState.selectedDateMillis?.let {
         convertMillisToDate(it)
     } ?: ""
 
@@ -55,12 +53,18 @@ fun AddGradeScreen(
                 buttonLabel = stringResource(R.string.save_grade_label),
                 itemToSave =  Grade(
                     name=nameGrade,
-                    value = valueGrade,
-                    weight = weightGrade,
-                    date = selectedDate,
+                    value = valueGrade.toDoubleOrNull() ?: 0.0,
+                    weight = weightGrade.toDoubleOrNull() ?: 0.0,
+                    date = datePickerState.selectedDateMillis?.let { Date(it) },
                     subjectId = gradeSubjectId,
                 ),
-                addNewItem = addGradeItem as (SaveableItem) -> Unit
+                addNewItem = addGradeItem as (SaveableItem) -> Unit,
+                afterSave = {
+                    navController.previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.set("success_message", "Grade saved successfully")
+                    navController.popBackStack()
+                }
             ){
                 //Nombre calificación
                 TextBoxForm(
@@ -74,24 +78,24 @@ fun AddGradeScreen(
                 TextBoxForm(
                     label = "Value",
                     placeholder = "Ex: 4.5",
-                    value = valueGrade.toString(),
-                    onValueChange = { newText -> valueGrade = newText.toDouble()},
+                    value = valueGrade,
+                    onValueChange = { newText -> valueGrade = newText},
                     isNumberField = true
                 )
-                //TODO Si pongo un punto se estalla la aplicación !!!!
+
                 //Peso de la calificación
                 TextBoxForm(
                     label = "Weight",
                     placeholder = "Ex: 0.35",
-                    value = weightGrade.toString(),
-                    onValueChange = { newText -> weightGrade = newText.toDouble() },
+                    value = weightGrade,
+                    onValueChange = { newText -> weightGrade = newText },
                     isNumberField = true
                 )
 
                 //fecha
                 DatePickerDocked(
-                    value = selectedDate,
-                    onValueChange = { newText -> selectedDate = newText },
+                    value = selectedDateStr,
+                    onValueChange = { },
                     datePickerState = datePickerState
                 )
 
@@ -101,18 +105,10 @@ fun AddGradeScreen(
                     label = stringResource(R.string.subject_label),
                     placeholder = stringResource(R.string.select_subject_label),
                     onValueChange = {newText -> gradeSubjectId =
-                        subjects.find { it.subject.name == newText }?.subject?.id ///cambiar
+                        subjects.find { it.subject.name == newText }?.subject?.id
                     }
                 )
             }
         }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun AddGradeScreenPreview(){
-//    UFriendlyTheme() {
-//        AddGradeScreen(navController = rememberNavController())
-//    }
-//}

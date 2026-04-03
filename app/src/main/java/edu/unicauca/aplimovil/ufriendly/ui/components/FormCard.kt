@@ -25,20 +25,20 @@ import edu.unicauca.aplimovil.ufriendly.data.SaveableItem
 
 /**
  * Un contenedor genérico en forma de tarjeta para agrupar campos de formulario.
- * 
- * @param T El tipo de objeto que este formulario maneja (Subject, Task, etc.)
+ *
  * @param title Título opcional para el grupo de campos.
- * @param itemProvider Una función que construye el objeto T a partir del estado actual del formulario.
+ * @param itemToSave Objeto que se guardará al presionar el botón.
  * @param addNewItem Acción a realizar con el objeto creado al presionar el botón.
  * @param modifier Modificador para ajustar el diseño externo.
  * @param content Bloque composable que contiene los campos del formulario.
  */
 @Composable
 fun FormCard(
-    title: String? = null,
     modifier: Modifier = Modifier,
+    title: String? = null,
     itemToSave: SaveableItem,
     addNewItem: (SaveableItem) -> Unit = {},
+    afterSave: () -> Unit = {},
     buttonLabel: String = stringResource(R.string.save_generic_label),
     content: @Composable ColumnScope.() -> Unit = {}
 ) {
@@ -75,6 +75,7 @@ fun FormCard(
                     text = buttonLabel,
                     onClick = {
                         addNewItem(itemToSave)
+                        afterSave()
                     },
                     enabled = itemToSave.isValid(),
                     isSelected = save,
