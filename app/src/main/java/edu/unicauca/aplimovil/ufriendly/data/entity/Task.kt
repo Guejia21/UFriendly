@@ -5,7 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import edu.unicauca.aplimovil.ufriendly.data.SaveableItem
-import java.sql.Date
+import java.util.Date
 
 @Entity(
     tableName = "tasks",
@@ -23,11 +23,11 @@ data class Task(
     val id: Int = 0,
     val name: String,
     val description: String,
-    val dueDate: String,
+    val dueDate: Date?,
     val isDone: Boolean = false,
     val subjectId: Int?
 ): SaveableItem{
     override fun isValid(): Boolean {
-        return name.isNotBlank() && dueDate.isNotBlank()
+        return name.isNotBlank() && dueDate != null
     }
 }

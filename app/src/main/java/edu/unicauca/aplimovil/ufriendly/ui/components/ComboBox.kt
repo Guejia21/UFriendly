@@ -51,7 +51,7 @@ fun ComboBox(
                     .fillMaxWidth(),
                 value = selectedOptionText,
                 placeholder = {Text(placeholder)},
-                onValueChange = onValueChange,
+                onValueChange = {},
                 readOnly = true, // Makes the TextField read-only as selections come from the menu
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
@@ -78,6 +78,7 @@ fun ComboBox(
                         onClick = {
                             selectedOptionText = selectionOption
                             expanded = false // Collapse the menu after selection
+                            onValueChange(selectionOption)
                         },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                     )

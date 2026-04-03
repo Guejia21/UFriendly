@@ -3,49 +3,41 @@ package edu.unicauca.aplimovil.ufriendly.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import edu.unicauca.aplimovil.ufriendly.R
 import edu.unicauca.aplimovil.ufriendly.data.entity.Task
-import edu.unicauca.aplimovil.ufriendly.data.repository.TaskRepository
+import edu.unicauca.aplimovil.ufriendly.data.relation.TaskWithSubject
 import edu.unicauca.aplimovil.ufriendly.ui.components.*
-import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
-import edu.unicauca.aplimovil.ufriendly.ui.viewModels.TaskViewModel
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import java.time.ZoneId
+import java.util.Date
 
 @Composable
 fun TaskScreen(
-    taskList: List<Task>,
+    taskList: List<TaskWithSubject>,
     navController: NavHostController,
     onCheckedChange: (Task, Boolean) -> Unit = { _, _ -> },
+    onDelete: (Task) -> Unit = {},
 ) {
     //Variable para saber que botón está seleccionado
     var filterSelected by remember { mutableStateOf("Pending") }
 
     // Filtrar tareas según selección
     val filteredTasks = when (filterSelected) {
-        "Pending"  -> taskList.filter { !it.isDone }
-        "Done"     -> taskList.filter { it.isDone }
-        "Expired"  -> taskList.filter { isExpired(it.dueDate) && !it.isDone }
+        "Pending"  -> taskList.filter { !it.task.isDone }
+        "Done"     -> taskList.filter { it.task.isDone }
+        "Expired"  -> taskList.filter { isExpired(it.task.dueDate) && !it.task.isDone }
         else       -> taskList
     }
     // Separar tareas de hoy y próximas
-    val todayTasks = filteredTasks.filter { isToday(it.dueDate)}
-    //TODO Revisar la conversión de las fechas porque no las está reconociendo
-    //Ejemplo: Una tarea de hace 10 días no la toma como expirada
-    val upcomingTasks = filteredTasks.filter { !isToday(it.dueDate) && !isExpired(it.dueDate)}
-    val lateTasks = filteredTasks.filter { isExpired(it.dueDate)}
+    val todayTasks = filteredTasks.filter { isToday(it.task.dueDate)}
+    val upcomingTasks = filteredTasks.filter { !isToday(it.task.dueDate) && !isExpired(it.task.dueDate)}
+    val lateTasks = filteredTasks.filter { isExpired(it.task.dueDate)}
 
     GenericScreen(
         navController = navController,
@@ -93,7 +85,8 @@ fun TaskScreen(
                             tasks = todayTasks,
                             onCheckedChange = { task, checked ->
                                 onCheckedChange(task, checked)
-                            }
+                            },
+                            onDelete = onDelete
                         )
                     }
                 }
@@ -106,7 +99,8 @@ fun TaskScreen(
                             tasks = upcomingTasks,
                             onCheckedChange = { task, checked ->
                                 onCheckedChange(task, checked)
-                            }
+                            },
+                            onDelete = onDelete
                         )
                     }
                 }
@@ -118,7 +112,8 @@ fun TaskScreen(
                             tasks = lateTasks,
                             onCheckedChange = { task, checked ->
                                 onCheckedChange(task, checked)
-                            }
+                            },
+                            onDelete = onDelete
                         )
                     }
                 }
@@ -148,35 +143,16 @@ fun TaskScreen(
 }
 
 // Funciones para revisar el vencimiento de las tareas
-private fun isToday(dateStr: String): Boolean {
-    return try {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val taskDate = LocalDate.parse(dateStr, formatter)
-        taskDate == LocalDate.now()
-    } catch (e: Exception) { false }
+fun isToday(date: Date?): Boolean {
+    if (date == null) return false
+    // El DatePicker de Material3 guarda la fecha en UTC (media noche).
+    // Para comparar correctamente, extraemos la fecha usando la zona horaria UTC.
+    val taskDate = date.toInstant().atZone(ZoneId.of("UTC")).toLocalDate()
+    return taskDate == LocalDate.now()
 }
 
-private fun isExpired(dateStr: String): Boolean {
-    return try {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val taskDate = LocalDate.parse(dateStr, formatter)
-        taskDate.isBefore(LocalDate.now())
-    } catch (e: Exception) { false }
+fun isExpired(date: Date?): Boolean {
+    if (date == null) return false
+    val taskDate = date.toInstant().atZone(ZoneId.of("UTC")).toLocalDate()
+    return taskDate.isBefore(LocalDate.now())
 }
-/*
-@Preview(showBackground = true)
-@Composable
-fun TaskScreenPreview() {
-    val subject = Subject("Cálculo I", listOf("Lunes 8-11"), "Juan Pérez", 80, 2.9, Color(0xFFE8D08A), null)
-    val subject2 = Subject("Programación Avanzada", listOf("Martes 10-12"), "Ana García", 75, 3.5, Color(0xFF90CAF9), null)
-    val today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-    val tasks = listOf(
-        Task("Preparar presentación de cálculo", "Desc", today, false, subject),
-        Task("Estudiar ondas", "Desc", today, false, subject),
-        Task("Proyecto de programación", "Desc", "2026-04-28", false, subject2),
-        Task("Proyecto de automatización", "Desc", "2023-10-28", false, subject2)
-    )
-    UFriendlyTheme {
-        TaskScreen(tasks = tasks, navController = rememberNavController())
-    }
-}*/

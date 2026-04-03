@@ -40,7 +40,7 @@ fun WelcomeDashboard(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = "¡Welcome ${state.userName}!",
+                text = "¡Welcome!",
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold

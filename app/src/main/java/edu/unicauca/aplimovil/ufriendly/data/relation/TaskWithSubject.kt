@@ -8,9 +8,9 @@ import edu.unicauca.aplimovil.ufriendly.data.entity.Task
 //A subject can have multiple tasks
 data class TaskWithSubject(
     @Embedded
-    val subject: Subject,
+    val task: Task,
     @Relation(
-        parentColumn = "id",
-        entityColumn = "subjectId")
-    val tasks: List<Task>
+        parentColumn = "subjectId",
+        entityColumn = "id")
+    val subject: Subject?
 )

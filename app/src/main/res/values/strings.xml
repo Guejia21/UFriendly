@@ -25,4 +25,5 @@
     <string name="date_label">Date</string>
     <string name="subject_label">Subject</string>
     <string name="select_subject_label">Select subject</string>
+    <string name="task_detail_label">Task detail</string>
 </resources>

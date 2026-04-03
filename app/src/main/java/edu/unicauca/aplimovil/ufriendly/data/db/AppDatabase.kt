@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import edu.unicauca.aplimovil.ufriendly.data.dao.ClassScheduleDao
 import edu.unicauca.aplimovil.ufriendly.data.dao.SubjectDao
 import edu.unicauca.aplimovil.ufriendly.data.dao.TaskDao
@@ -12,6 +13,7 @@ import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
 import edu.unicauca.aplimovil.ufriendly.data.entity.Task
 import edu.unicauca.aplimovil.ufriendly.data.entity.Grade
 import edu.unicauca.aplimovil.ufriendly.data.entity.ClassSchedule
+
 @Database(
     entities = [
         Subject::class,
@@ -19,9 +21,10 @@ import edu.unicauca.aplimovil.ufriendly.data.entity.ClassSchedule
         Grade::class,
         ClassSchedule::class
     ],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun subjectDao(): SubjectDao
     abstract fun taskDao(): TaskDao

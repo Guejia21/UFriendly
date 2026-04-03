@@ -3,34 +3,23 @@ package edu.unicauca.aplimovil.ufriendly.ui.screens
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import edu.unicauca.aplimovil.ufriendly.R
 import edu.unicauca.aplimovil.ufriendly.data.SaveableItem
-import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
 import edu.unicauca.aplimovil.ufriendly.data.entity.Task
 import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
-import edu.unicauca.aplimovil.ufriendly.data.repository.SubjectRepository
-import edu.unicauca.aplimovil.ufriendly.data.repository.TaskRepository
 import edu.unicauca.aplimovil.ufriendly.ui.components.ComboBox
 import edu.unicauca.aplimovil.ufriendly.ui.components.DatePickerDocked
 import edu.unicauca.aplimovil.ufriendly.ui.components.FormCard
 import edu.unicauca.aplimovil.ufriendly.ui.components.TextBoxForm
 import edu.unicauca.aplimovil.ufriendly.ui.components.TopBar
 import edu.unicauca.aplimovil.ufriendly.ui.components.convertMillisToDate
-import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
-import edu.unicauca.aplimovil.ufriendly.ui.viewModels.SubjectViewModel
-import edu.unicauca.aplimovil.ufriendly.ui.viewModels.TaskViewModel
+import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,7 +32,7 @@ fun AddTaskScreen(
     var taskDescription by remember { mutableStateOf("") }
     var taskSubjectId by remember  { mutableStateOf<Int?>(null) }
     val datePickerState = rememberDatePickerState()
-    var selectedDate = datePickerState.selectedDateMillis?.let {
+    val selectedDateStr = datePickerState.selectedDateMillis?.let {
         convertMillisToDate(it)
     } ?: ""
 
@@ -54,7 +43,12 @@ fun AddTaskScreen(
     {
         FormCard(
             buttonLabel = stringResource(R.string.save_task_label),
-            itemToSave = Task(name=taskName, description =  taskDescription, dueDate = selectedDate, subjectId = taskSubjectId),
+            itemToSave = Task(
+                name = taskName,
+                description = taskDescription,
+                dueDate = datePickerState.selectedDateMillis?.let { Date(it) },
+                subjectId = taskSubjectId
+            ),
             addNewItem = addTaskItem as (SaveableItem) -> Unit
         ){
             TextBoxForm(
@@ -70,8 +64,8 @@ fun AddTaskScreen(
                 onValueChange = { newText -> taskDescription = newText }
             )
             DatePickerDocked(
-                value = selectedDate,
-                onValueChange = { newText -> selectedDate = newText },
+                value = selectedDateStr,
+                onValueChange = { },
                 datePickerState = datePickerState,
             )
             ComboBox(
@@ -85,10 +79,3 @@ fun AddTaskScreen(
         }
     }
 }
-/*@Preview
-@Composable
-fun AddTaskScreenPreview(){
-    UFriendlyTheme {
-        AddTaskScreen(navController = rememberNavController(), subjects = listOf(Subject("Cálculo I", listOf("Lunes 8-11"), "Juan Pérez", 80, 2.9, color = Color(0xFFE8D08A), null)))
-    }
-}*/

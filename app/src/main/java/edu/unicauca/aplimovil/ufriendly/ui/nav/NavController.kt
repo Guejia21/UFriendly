@@ -46,7 +46,6 @@ fun AppNavHost(
     val taskRepository by lazy { TaskRepository(database.taskDao()) }
     val taskViewModel: TaskViewModel = viewModel(factory= TaskViewModel.provideFactory(taskRepository))
     val taskUiState by taskViewModel.uiState.collectAsState()
-    val state = DashboardState("Jhoan Chacon",1,2,2)
     val subjectRepository by lazy { SubjectRepository(database.subjectDao(), database.classScheduleDao()) }
     val subjectViewModel: SubjectViewModel = viewModel(factory= SubjectViewModel.provideFactory(subjectRepository))
     val subjectUiState by subjectViewModel.uiState.collectAsState()
@@ -57,7 +56,11 @@ fun AppNavHost(
 
         composable(route = ScreenName.Home.name) {
             MainScreen(
-                state,
+                DashboardState(
+                    pendingCount = taskUiState.pendingTasks,
+                    doneCount = taskUiState.doneTasks,
+                    expiredCount = taskUiState.expiredTasks
+                ),
                 subjects=subjectUiState.subjectList,
                 navController = navController
             )
@@ -72,7 +75,8 @@ fun AppNavHost(
             TaskScreen(
                 taskList = taskUiState.taskList,
                 navController = navController,
-                onCheckedChange = taskViewModel::changeStatus
+                onCheckedChange = taskViewModel::changeStatus,
+                onDelete = taskViewModel::deleteTask
             )
         }
         composable(route = ScreenName.GradesScreen.name) {

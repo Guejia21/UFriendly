@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import edu.unicauca.aplimovil.ufriendly.data.entity.Task
+import edu.unicauca.aplimovil.ufriendly.data.relation.TaskWithSubject
 import edu.unicauca.aplimovil.ufriendly.data.repository.TaskRepository
+import edu.unicauca.aplimovil.ufriendly.ui.screens.isExpired
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -12,7 +14,10 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 data class TaskUiState(
-    val taskList: List<Task> = emptyList()
+    val taskList: List<TaskWithSubject> = emptyList(),
+    val doneTasks:Int = taskList.map { it.task.isDone }.count { it },
+    val pendingTasks:Int = taskList.map { it.task.isDone }.count { !it },
+    val expiredTasks:Int = taskList.map { isExpired(it.task.dueDate) && !it.task.isDone }.count { it }
 )
 class TaskViewModel(private val repository: TaskRepository): ViewModel(){
     val  uiState: StateFlow<TaskUiState> = repository.allTasks

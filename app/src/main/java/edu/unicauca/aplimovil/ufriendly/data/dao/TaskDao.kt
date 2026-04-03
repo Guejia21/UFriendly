@@ -8,6 +8,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import edu.unicauca.aplimovil.ufriendly.data.entity.Task
+import edu.unicauca.aplimovil.ufriendly.data.relation.TaskWithSubject
 
 @Dao
 interface TaskDao {
@@ -17,7 +18,8 @@ interface TaskDao {
     fun getAllTasks(): Flow<List<Task>>
     @Query("SELECT * FROM tasks WHERE id = :taskId")
     fun getTaskById(taskId: Int): Flow<Task>
-
+    @Query("SELECT * FROM tasks")
+    fun getTasksWithSubjects(): Flow<List<TaskWithSubject>>
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(task: Task)
     @Update

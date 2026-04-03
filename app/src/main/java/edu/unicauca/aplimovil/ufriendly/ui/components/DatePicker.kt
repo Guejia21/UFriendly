@@ -74,7 +74,7 @@ fun DatePickerDocked(
                 onValueChange = {
                     onValueChange(it)
                     },
-                placeholder = { Text("Ex: 01/01/2023") },
+                placeholder = { Text("Ex: 31/12/2023") },
                 readOnly = true,
                 trailingIcon = {
                     IconButton(onClick = { showDatePicker = !showDatePicker }) {
@@ -133,7 +133,8 @@ fun DatePickerDocked(
 //}
 
 fun convertMillisToDate(millis: Long): String {
-    val formatter = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())    // Set the formatter to UTC to match the DatePicker's output
+    val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    // Set the formatter to UTC to match the DatePicker's output
     formatter.timeZone = TimeZone.getTimeZone("UTC")
     return formatter.format(Date(millis))
 }

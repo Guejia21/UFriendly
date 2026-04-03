@@ -17,6 +17,6 @@ data class SubjectWithSchedules(
     val classSchedules: List<ClassSchedule>
 ): SaveableItem {
     override fun isValid(): Boolean {
-        return subject.isValid() && classSchedules.all { it.isValid() }
+        return subject.isValid() && classSchedules.isNotEmpty() && classSchedules.all { it.isValid() }
     }
 }

@@ -3,6 +3,8 @@ package edu.unicauca.aplimovil.ufriendly.ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,10 +17,13 @@ import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
 import edu.unicauca.aplimovil.ufriendly.data.entity.Task
 import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
 
+import edu.unicauca.aplimovil.ufriendly.data.relation.TaskWithSubject
+
 @Composable
 fun TaskItem(
-    task: Task,
+    task: TaskWithSubject,
     onCheckedChange: (Boolean) -> Unit,
+    onDelete: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -38,7 +43,7 @@ fun TaskItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Checkbox(
-                checked = task.isDone,
+                checked = task.task.isDone,
                 onCheckedChange = {checked -> onCheckedChange(checked)},
                 colors = CheckboxDefaults.colors(
                     checkedColor = MaterialTheme.colorScheme.tertiary,
@@ -46,31 +51,32 @@ fun TaskItem(
                 )
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Column {
+            Column(modifier= Modifier.weight(3f)) {
                 Text(
-                    text = task.name,
+                    text = task.task.name,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurface
                 )
-                //TODO Inlcuir el nombre de la materia si es el caso
+                
+                val dateStr = task.task.dueDate?.let { convertMillisToDate(it.time) } ?: "No date"
+                
                 Text(
-                    text = "${task.subjectId?:"No subject"} - ${task.dueDate}",
+                    text = "${task.subject?.name ?:"No subject"} - $dateStr",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            IconButton(
+                onClick = onDelete,
+                modifier= Modifier.weight(1f)
+            ){
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Delete",
+                    tint = Color.Red,
                 )
             }
         }
     }
 }
-/*
-@Preview
-@Composable
-fun TaskItemPreview(){
-    val subject = Subject("Cálculo I", listOf("Lunes 8-11"), "Juan Pérez", 80, 2.9, Color(0xFFE8D08A), null)
-    val task = Task("Preparar presentación de cálculo", "Desc", "2023-10-2",false,subject)
-    UFriendlyTheme {
-        TaskItem(task = task, onCheckedChange = {})
-    }
-
-}*/

@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
 import edu.unicauca.aplimovil.ufriendly.data.entity.Task
+import edu.unicauca.aplimovil.ufriendly.data.relation.TaskWithSubject
 import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -19,8 +20,9 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun TaskSection(
     title: String,
-    tasks: List<Task>,
+    tasks: List<TaskWithSubject>,
     onCheckedChange: (Task, Boolean) -> Unit,
+    onDelete: (Task) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     if (tasks.isEmpty()) return
@@ -36,7 +38,8 @@ fun TaskSection(
         tasks.forEach { task ->
             TaskItem(
                 task = task,
-                onCheckedChange = { checked -> onCheckedChange(task, checked) }
+                onCheckedChange = { checked -> onCheckedChange(task.task, checked) },
+                onDelete = { onDelete(task.task) }
             )
         }
     }
