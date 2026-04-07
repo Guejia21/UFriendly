@@ -13,6 +13,7 @@ import edu.unicauca.aplimovil.ufriendly.R
 import edu.unicauca.aplimovil.ufriendly.data.entity.Task
 import edu.unicauca.aplimovil.ufriendly.data.relation.TaskWithSubject
 import edu.unicauca.aplimovil.ufriendly.ui.components.*
+import edu.unicauca.aplimovil.ufriendly.ui.nav.ScreenName
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.Date
@@ -38,6 +39,9 @@ fun TaskScreen(
     val todayTasks = filteredTasks.filter { isToday(it.task.dueDate)}
     val upcomingTasks = filteredTasks.filter { !isToday(it.task.dueDate) && !isExpired(it.task.dueDate)}
     val lateTasks = filteredTasks.filter { isExpired(it.task.dueDate)}
+
+    val taskUpdatedMsg = stringResource(R.string.task_updated_label)
+    val taskDeletedMsg = stringResource(R.string.task_deleted_label)
 
     GenericScreen(
         navController = navController,
@@ -85,8 +89,21 @@ fun TaskScreen(
                             tasks = todayTasks,
                             onCheckedChange = { task, checked ->
                                 onCheckedChange(task, checked)
+                                navController.currentBackStackEntry
+                                    ?.savedStateHandle
+                                    ?.set("success_message", taskUpdatedMsg)
                             },
-                            onDelete = onDelete
+                            onDelete = { task ->
+                                onDelete(task)
+                                navController.currentBackStackEntry
+                                    ?.savedStateHandle
+                                    ?.set("success_message", taskDeletedMsg)
+
+                            },
+                            // La tarea "task" es añadidad en el onItemClick dentro de TaskSection
+                            onItemClick = { task ->
+                                navController.navigate("${ScreenName.TaskDetailScreen.name}/${task.id}")
+                            }
                         )
                     }
                 }
@@ -99,8 +116,20 @@ fun TaskScreen(
                             tasks = upcomingTasks,
                             onCheckedChange = { task, checked ->
                                 onCheckedChange(task, checked)
+                                navController.currentBackStackEntry
+                                    ?.savedStateHandle
+                                    ?.set("success_message", taskUpdatedMsg)
                             },
-                            onDelete = onDelete
+                            onDelete = { task ->
+                                onDelete(task)
+                                navController.currentBackStackEntry
+                                    ?.savedStateHandle
+                                    ?.set("success_message", taskDeletedMsg)
+
+                            },
+                            onItemClick = { task ->
+                                navController.navigate("${ScreenName.TaskDetailScreen.name}/${task.id}")
+                            }
                         )
                     }
                 }
@@ -112,8 +141,20 @@ fun TaskScreen(
                             tasks = lateTasks,
                             onCheckedChange = { task, checked ->
                                 onCheckedChange(task, checked)
+                                navController.currentBackStackEntry
+                                    ?.savedStateHandle
+                                    ?.set("success_message", taskUpdatedMsg)
                             },
-                            onDelete = onDelete
+                            onDelete = { task ->
+                                onDelete(task)
+                                navController.currentBackStackEntry
+                                    ?.savedStateHandle
+                                    ?.set("success_message", taskDeletedMsg)
+
+                            },
+                            onItemClick = { task ->
+                                navController.navigate("${ScreenName.TaskDetailScreen.name}/${task.id}")
+                            }
                         )
                     }
                 }

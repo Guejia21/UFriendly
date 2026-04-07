@@ -45,10 +45,6 @@ fun AddGradeScreen(
         navController = navController,
         topBar = { TopBar(stringResource(R.string.add_grade_label)) }
     ) {
-        Column(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-        ) {
             FormCard(
                 buttonLabel = stringResource(R.string.save_grade_label),
                 itemToSave =  Grade(
@@ -111,4 +107,4 @@ fun AddGradeScreen(
             }
         }
     }
-}
+

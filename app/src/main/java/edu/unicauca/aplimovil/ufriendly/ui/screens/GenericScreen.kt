@@ -64,7 +64,7 @@ fun GenericScreen(
     // Remove the message after 3 seconds
     LaunchedEffect(successMessage) {
         if (successMessage != null) {
-            delay(3000)
+            delay(900)
             navController.currentBackStackEntry?.savedStateHandle?.set("success_message", null)
         }
     }

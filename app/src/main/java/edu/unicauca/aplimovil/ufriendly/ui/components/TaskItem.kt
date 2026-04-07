@@ -23,10 +23,13 @@ import edu.unicauca.aplimovil.ufriendly.data.relation.TaskWithSubject
 fun TaskItem(
     task: TaskWithSubject,
     onCheckedChange: (Boolean) -> Unit,
+    onItemClick:()->Unit = {},
     onDelete: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+
     Card(
+        onClick =onItemClick ,
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 4.dp),

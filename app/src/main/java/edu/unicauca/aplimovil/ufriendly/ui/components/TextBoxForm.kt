@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
  * @param onValueChange Callback que se dispara cada vez que el usuario modifica el texto.
  */
 @Composable
-fun TextBoxForm(label: String, placeholder: String, value: String,isNumberField: Boolean = false, onValueChange: (String) -> Unit){
+fun TextBoxForm(label: String, placeholder: String, value: String, isNumberField: Boolean = false, singleLine: Boolean=true, onValueChange: (String) -> Unit){
     Text(
         text = label,
         color = MaterialTheme.colorScheme.primary,
@@ -39,7 +39,7 @@ fun TextBoxForm(label: String, placeholder: String, value: String,isNumberField:
             unfocusedBorderColor = MaterialTheme.colorScheme.primary,
             focusedBorderColor = MaterialTheme.colorScheme.primary,
         ),
-        singleLine = true,
+        singleLine = singleLine,
         keyboardOptions = if(isNumberField) KeyboardOptions(keyboardType = KeyboardType.Number) else KeyboardOptions.Default
     )
 }

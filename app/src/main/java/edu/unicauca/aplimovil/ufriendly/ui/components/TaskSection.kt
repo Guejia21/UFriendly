@@ -21,7 +21,8 @@ import java.time.format.DateTimeFormatter
 fun TaskSection(
     title: String,
     tasks: List<TaskWithSubject>,
-    onCheckedChange: (Task, Boolean) -> Unit,
+    onCheckedChange: (Task, Boolean) -> Unit, 
+    onItemClick: (Task) -> Unit = {},
     onDelete: (Task) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -39,7 +40,8 @@ fun TaskSection(
             TaskItem(
                 task = task,
                 onCheckedChange = { checked -> onCheckedChange(task.task, checked) },
-                onDelete = { onDelete(task.task) }
+                onDelete = { onDelete(task.task) },
+                onItemClick = {onItemClick(task.task)}
             )
         }
     }

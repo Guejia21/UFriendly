@@ -27,4 +27,15 @@
     <string name="subject_label">Materia</string>
     <string name="select_subject_label">Seleccionar materia</string>
     <string name="task_detail_label">Detalle de tarea</string>
+    <string name="description_label">Descripción</string>
+    <string name="mark_as_done">Marcar como hecho</string>
+    <string name="delete_label">Borrar</string>
+    <string name="no_subject_label">Sin materia</string>
+    <string name="due_date_prefix">Fecha límite: %1$s</string>
+    <string name="task_updated_label">Tarea actualizada exitosamente!</string>
+    <string name="task_deleted_label">Tarea borrada exitosamente!</string>
+    <string name="no_subjects_label">No hay materias</string>
+    <string name="loading">Cargando</string>
+    <string name="loading_failed">Fallo al cargar libros</string>
+    <string name="no_books_found">No se encontraron libros</string>
 </resources>

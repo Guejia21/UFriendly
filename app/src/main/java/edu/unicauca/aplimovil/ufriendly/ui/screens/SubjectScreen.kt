@@ -2,12 +2,16 @@ package edu.unicauca.aplimovil.ufriendly.ui.screens
 
 import edu.unicauca.aplimovil.ufriendly.R
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,6 +27,7 @@ import edu.unicauca.aplimovil.ufriendly.ui.components.SearchBar
 import edu.unicauca.aplimovil.ufriendly.ui.components.TopBar
 import edu.unicauca.aplimovil.ufriendly.ui.components.Button
 import edu.unicauca.aplimovil.ufriendly.ui.components.SubjectFullCard
+import edu.unicauca.aplimovil.ufriendly.ui.nav.ScreenName
 import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
 
 /**
@@ -45,9 +50,7 @@ fun SubjectScreen(
         topBar = { TopBar(stringResource(R.string.subjects_label)) }
     )
     {
-        Column(
-            modifier = Modifier.verticalScroll(rememberScrollState()) //recomendado para dispositivos pequeños donde haya que hacer scroll
-        ) {
+        Column() {
             //Barra de búsqueda
             SearchBar(
                 textSearch.value,
@@ -76,15 +79,50 @@ fun SubjectScreen(
                 )
             }
             // Contenido principal - Materias
-            if (mostrarCursando) {
-                subjects.filter { it.subject.completionPercentage < 100 }.take(5).forEach { subject ->
-                    SubjectFullCard(subject)
-                }
-            }else{
-                subjects.filter { it.subject.completionPercentage == 100 }.take(5).forEach { subject ->
-                    SubjectFullCard(subject)
+            LazyColumn {
+                if (subjects.isEmpty()) {
+                    item {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(32.dp),
+                            contentAlignment = androidx.compose.ui.Alignment.Center
+                        ) {
+                            Text(
+                                text = stringResource(
+                                    R.string.no_subjects_label
+                                ),
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
+                } else if (mostrarCursando) {
+                    subjects.filter { it.subject.completionPercentage < 100 }
+                        .forEach { subject ->
+                            item {
+                                SubjectFullCard(
+                                    subject = subject,
+                                    onClick = {
+                                        navController.navigate("${ScreenName.SubjectDetailScreen.name}/${subject.subject.id}")
+                                    }
+                                )
+                            }
+                        }
+                } else {
+                    subjects.filter { it.subject.completionPercentage == 100 }
+                        .forEach { subject ->
+                            item {
+                                SubjectFullCard(
+                                    subject = subject,
+                                    onClick = {
+                                        navController.navigate("${ScreenName.SubjectDetailScreen.name}/${subject.subject.id}")
+                                    })
+                            }
+                        }
                 }
             }
+
         }
     }
 }

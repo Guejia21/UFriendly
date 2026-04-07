@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.work.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -78,4 +79,8 @@ dependencies {
     implementation(libs.compose.materialIconsExtended)
     //Dependencies for Compose Navigation
     implementation(libs.compose.navigation)
+    //Dependencies for Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+    implementation("io.coil-kt:coil-compose:2.6.0") // for cover images
 }

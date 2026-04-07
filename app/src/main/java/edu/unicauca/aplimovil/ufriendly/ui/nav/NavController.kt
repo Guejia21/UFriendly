@@ -4,11 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import edu.unicauca.aplimovil.ufriendly.data.DashboardState
 import edu.unicauca.aplimovil.ufriendly.data.db.AppDatabase
 import edu.unicauca.aplimovil.ufriendly.data.repository.GradeRepository
@@ -19,9 +22,12 @@ import edu.unicauca.aplimovil.ufriendly.ui.screens.AddSubjectScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.AddTaskScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.GradesScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.MainScreen
+import edu.unicauca.aplimovil.ufriendly.ui.screens.SubjectDetailScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.SubjectScreen
+import edu.unicauca.aplimovil.ufriendly.ui.screens.TaskDetailScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.TaskScreen
 import edu.unicauca.aplimovil.ufriendly.ui.viewModels.GradeViewModel
+import edu.unicauca.aplimovil.ufriendly.ui.viewModels.LibraryViewModel
 import edu.unicauca.aplimovil.ufriendly.ui.viewModels.SubjectViewModel
 import edu.unicauca.aplimovil.ufriendly.ui.viewModels.TaskViewModel
 import kotlin.getValue
@@ -33,7 +39,9 @@ enum class ScreenName{
     GradesScreen,
     AddTaskScreen,
     AddSubjectScreen,
-    AddGradeScreen
+    AddGradeScreen,
+    TaskDetailScreen,
+    SubjectDetailScreen,
 }
 
 @Composable
@@ -43,7 +51,8 @@ fun AppNavHost(
     database: AppDatabase,
     modifier: Modifier = Modifier
 ) {
-    val taskRepository by lazy { TaskRepository(database.taskDao()) }
+    val context = LocalContext.current
+    val taskRepository by lazy { TaskRepository(database.taskDao(), context.applicationContext) }
     val taskViewModel: TaskViewModel = viewModel(factory= TaskViewModel.provideFactory(taskRepository))
     val taskUiState by taskViewModel.uiState.collectAsState()
     val subjectRepository by lazy { SubjectRepository(database.subjectDao(), database.classScheduleDao()) }
@@ -104,6 +113,56 @@ fun AppNavHost(
                 subjects = subjectUiState.subjectList,
                 addGradeItem = gradeViewModel::addGrade
             )
+        }
+        composable(
+            route = ScreenName.TaskDetailScreen.name + "/{taskId}",
+            arguments = listOf(
+                navArgument("taskId") {
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+            val taskId = backStackEntry.arguments?.getInt("taskId")
+            val task = taskUiState.taskList.find { it.task.id == taskId }
+            if (task != null){
+                TaskDetailScreen(
+                    task = task,
+                    navController = navController,
+                    onMarkAsDone = {check->
+                        (taskViewModel::changeStatus)(task.task, check) //Change the status to done
+                        navController.previousBackStackEntry
+                            ?.savedStateHandle
+                            ?.set("success_message", "Task done")
+                        navController.popBackStack() //Regresa a la pantalla de tareas
+                                   },
+                    onDelete = { (taskViewModel::deleteTask)(task.task)
+                        navController.previousBackStackEntry
+                            ?.savedStateHandle
+                            ?.set("success_message", "Task deleted successfully")
+                        navController.popBackStack()
+                    }
+                )
+            }
+
+        }
+        composable(
+            route = ScreenName.SubjectDetailScreen.name + "/{subjectId}",
+            arguments = listOf(
+                navArgument("subjectId") {
+                    type = NavType.IntType
+                }
+            )
+        ){ backStackEntry ->
+            val subjectId = backStackEntry.arguments?.getInt("subjectId")
+            val subject = subjectUiState.subjectList.find { it.subject.id == subjectId }
+            if (subject != null){
+                val libraryViewModel: LibraryViewModel = viewModel(factory = LibraryViewModel.provideFactory(subject.subject.name))
+                SubjectDetailScreen(
+                    subject = subject.subject,
+                    libraryUiState = libraryViewModel.libraryUiState,
+                    navController = navController
+                )
+            }
         }
     }
 }

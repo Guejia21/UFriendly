@@ -27,8 +27,12 @@ import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
  * @param subject Objeto de tipo [Subject] que contiene los datos de la materia a mostrar.
  */
 @Composable
-fun SubjectFullCard(subject: SubjectWithSchedules){
+fun SubjectFullCard(
+    subject: SubjectWithSchedules,
+    onClick: () -> Unit = {}
+){
     Card(
+        onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 16.dp),

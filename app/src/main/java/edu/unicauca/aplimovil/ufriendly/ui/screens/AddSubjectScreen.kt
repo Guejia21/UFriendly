@@ -61,10 +61,6 @@ fun AddSubjectScreen(
         navController = navController,
         topBar = { TopBar(stringResource(R.string.add_subject_label)) },
     ) {
-        Column(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-        ) {
             //Formulario
             FormCard(
                 buttonLabel = stringResource(R.string.save_subject_label),
@@ -141,4 +137,4 @@ fun AddSubjectScreen(
             }
         }
     }
-}
+

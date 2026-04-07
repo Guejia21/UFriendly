@@ -67,6 +67,7 @@ fun AddTaskScreen(
                 label = "Description",
                 placeholder = "Ex: Complete the project",
                 value = taskDescription,
+                singleLine = false,
                 onValueChange = { newText -> taskDescription = newText }
             )
             DatePickerDocked(
