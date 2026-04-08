@@ -28,6 +28,6 @@ data class Grade (
     val subjectId: Int,
 ): SaveableItem{
     override fun isValid(): Boolean {
-        return name.isNotBlank() && value >= 0.0 && weight > 0.0 && date != null && subjectId != 0
+        return name.isNotBlank() && value >= 0.0 && weight > 0.0 && weight <= 1.0 && date != null && subjectId != 0
     }
 }

@@ -106,10 +106,15 @@ fun AddGradeScreen(
                     )
 
                     TextBoxForm(
-                        label = "Weight",
+                        label = "Weight 0-1",
                         placeholder = "Ex: 0.35",
                         value = weightGrade,
-                        onValueChange = { weightGrade = it },
+                        onValueChange = { newValue ->
+                            val parsed = newValue.toDoubleOrNull()
+                            if (newValue.isEmpty() || (parsed != null && parsed <= 1.0)) {
+                                weightGrade = newValue
+                            }
+                        },
                         isNumberField = true
                     )
 
