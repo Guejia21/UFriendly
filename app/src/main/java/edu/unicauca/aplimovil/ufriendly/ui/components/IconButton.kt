@@ -20,7 +20,7 @@ fun IconButton(label: String,icon: ImageVector, contentDescription: String,isSel
                 imageVector = icon,
                 contentDescription = contentDescription,
                 tint = Color.White,
-                modifier = if (isSelected) Modifier.size(35.dp) else Modifier.size(25.dp)
+                modifier = if (isSelected) Modifier.size(30.dp) else Modifier.size(20.dp)
             )
             Text(text = label, color = Color.White)
         }

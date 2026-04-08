@@ -39,4 +39,7 @@
     <string name="no_grades_label">There are no grades</string>
     <string name="no_subjects_label">There are no subjects</string>
     <string name="search_subjects_placeholder">Search subjects...</string>
+    <string name="credits_label">Credits</string>
+    <string name="development_team_label">Development Team</string>
+    <string name="about_us_label">About us</string>
 </resources>

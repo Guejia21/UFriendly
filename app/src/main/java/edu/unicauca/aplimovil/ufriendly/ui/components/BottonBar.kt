@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Grade
+import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.TaskAlt
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import edu.unicauca.aplimovil.ufriendly.R
+import androidx.compose.foundation.layout.navigationBarsPadding
 import edu.unicauca.aplimovil.ufriendly.ui.nav.ScreenName
 
 @Composable
@@ -30,6 +32,7 @@ fun BottomBar(navController: NavHostController) {
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.primary)
+            .navigationBarsPadding()
     ) {
         IconButton(
             label = stringResource(R.string.home_button_label),
@@ -43,14 +46,14 @@ fun BottomBar(navController: NavHostController) {
             icon = Icons.Default.Book,
             contentDescription = stringResource(R.string.subjects_label),
             onClick = { navController.navigate(ScreenName.SubjectScreen.name) },
-            isSelected = currentRoute == ScreenName.SubjectScreen.name || currentRoute == ScreenName.AddSubjectScreen.name
+            isSelected = currentRoute == ScreenName.SubjectScreen.name || currentRoute == ScreenName.AddSubjectScreen.name || currentRoute == ScreenName.SubjectDetailScreen.name
         )
         IconButton(
             label = stringResource(R.string.task_label),
             icon = Icons.Default.TaskAlt,
             contentDescription = stringResource(R.string.task_label),
             onClick = { navController.navigate(ScreenName.TaskScreen.name) },
-            isSelected = currentRoute == ScreenName.TaskScreen.name || currentRoute == ScreenName.AddTaskScreen.name
+            isSelected = currentRoute == ScreenName.TaskScreen.name || currentRoute == ScreenName.AddTaskScreen.name || currentRoute == ScreenName.TaskDetailScreen.name
         )
         IconButton(
             label = stringResource(R.string.grades_label),
@@ -59,5 +62,13 @@ fun BottomBar(navController: NavHostController) {
             onClick = { navController.navigate(ScreenName.GradesScreen.name) },
             isSelected = currentRoute == ScreenName.GradesScreen.name || currentRoute == ScreenName.AddGradeScreen.name
         )
+        IconButton(
+            label = stringResource(R.string.about_us_label),
+            icon = Icons.Default.People,
+            contentDescription = stringResource(R.string.about_us_label),
+            onClick = { navController.navigate(ScreenName.AboutUsScreen.name) },
+            isSelected = currentRoute == ScreenName.AboutUsScreen.name
+        )
+
     }
 }

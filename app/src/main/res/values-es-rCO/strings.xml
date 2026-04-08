@@ -40,4 +40,7 @@
     <string name="no_grades_label">No hay calificaciones</string>
     <string name="no_subjects_label">No hay materias</string>
     <string name="search_subjects_placeholder">Buscar materias…</string>
+    <string name="credits_label">Créditos</string>
+    <string name="development_team_label">Equipo de desarrollo</string>
+    <string name="about_us_label">Nosotros</string>
 </resources>

@@ -17,6 +17,7 @@ import edu.unicauca.aplimovil.ufriendly.data.db.AppDatabase
 import edu.unicauca.aplimovil.ufriendly.data.repository.GradeRepository
 import edu.unicauca.aplimovil.ufriendly.data.repository.SubjectRepository
 import edu.unicauca.aplimovil.ufriendly.data.repository.TaskRepository
+import edu.unicauca.aplimovil.ufriendly.ui.screens.AboutUsScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.AddGradeScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.AddSubjectScreen
 import edu.unicauca.aplimovil.ufriendly.ui.screens.AddTaskScreen
@@ -42,14 +43,15 @@ enum class ScreenName{
     AddGradeScreen,
     TaskDetailScreen,
     SubjectDetailScreen,
+    AboutUsScreen
 }
 
 @Composable
 fun AppNavHost(
+    modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = ScreenName.Home.name,
     database: AppDatabase,
-    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val taskRepository by lazy { TaskRepository(database.taskDao(), context.applicationContext) }
@@ -112,6 +114,11 @@ fun AppNavHost(
                 navController = navController,
                 subjects = subjectUiState.subjectList,
                 addGradeItem = gradeViewModel::addGrade
+            )
+        }
+        composable(route = ScreenName.AboutUsScreen.name) {
+            AboutUsScreen(
+                navController = navController
             )
         }
         composable(
