@@ -15,6 +15,7 @@ data class Subject (
     val color: String
 ): SaveableItem{
     override fun isValid(): Boolean {
-        return name.isNotBlank() && teacher.isNotBlank()
+        return name.isNotBlank() && teacher.isNotBlank() && color.isNotBlank()
+
     }
 }

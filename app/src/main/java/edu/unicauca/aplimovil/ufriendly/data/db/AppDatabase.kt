@@ -21,7 +21,7 @@ import edu.unicauca.aplimovil.ufriendly.data.entity.ClassSchedule
         Grade::class,
         ClassSchedule::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

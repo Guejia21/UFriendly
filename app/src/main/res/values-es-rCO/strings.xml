@@ -34,8 +34,10 @@
     <string name="due_date_prefix">Fecha límite: %1$s</string>
     <string name="task_updated_label">Tarea actualizada exitosamente!</string>
     <string name="task_deleted_label">Tarea borrada exitosamente!</string>
-    <string name="no_subjects_label">No hay materias</string>
     <string name="loading">Cargando</string>
     <string name="loading_failed">Fallo al cargar libros</string>
     <string name="no_books_found">No se encontraron libros</string>
+    <string name="no_grades_label">No hay calificaciones</string>
+    <string name="no_subjects_label">No hay materias</string>
+    <string name="search_subjects_placeholder">Buscar materias…</string>
 </resources>

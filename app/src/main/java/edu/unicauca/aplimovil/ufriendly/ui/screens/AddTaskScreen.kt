@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import edu.unicauca.aplimovil.ufriendly.R
 import edu.unicauca.aplimovil.ufriendly.data.SaveableItem
 import edu.unicauca.aplimovil.ufriendly.data.entity.Task
+import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectFullInfo
 import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
 import edu.unicauca.aplimovil.ufriendly.ui.components.ComboBox
 import edu.unicauca.aplimovil.ufriendly.ui.components.DatePickerDocked
@@ -25,7 +26,7 @@ import java.util.Date
 @Composable
 fun AddTaskScreen(
     navController: NavHostController,
-    subjects: List<SubjectWithSchedules>,
+    subjects: List<SubjectFullInfo>,
     addTaskItem: (Task) -> Unit = {},
     ){
     var taskName by remember { mutableStateOf("") }

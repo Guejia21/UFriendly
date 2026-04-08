@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import edu.unicauca.aplimovil.ufriendly.data.entity.ClassSchedule
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
+import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectFullInfo
 import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
 import edu.unicauca.aplimovil.ufriendly.data.repository.SubjectRepository
 import kotlinx.coroutines.flow.SharingStarted
@@ -14,10 +15,10 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 data class SubjectUiState(
-    val subjectList: List<SubjectWithSchedules> = emptyList()
+    val subjectList: List<SubjectFullInfo> = emptyList()
 )
 class SubjectViewModel(private val repository: SubjectRepository): ViewModel(){
-    val  uiState: StateFlow<SubjectUiState> = repository.allSubjectsWithSchedules
+    val  uiState: StateFlow<SubjectUiState> = repository.allSubjectsFullInfo
         .map { SubjectUiState(it) }
         .stateIn(
             scope = viewModelScope,

@@ -70,12 +70,6 @@ fun ScheduleCard(
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onSurface
             )
-            Text(
-                text = "Toca para editar",
-                fontSize = 11.sp,
-                color = MaterialTheme.colorScheme.onSurface
-
-            )
         }
 
         // Botón eliminar
@@ -84,9 +78,10 @@ fun ScheduleCard(
             modifier = Modifier.size(24.dp)
         ) {
             Text(
-                text = "✕",
+                text = "X",
                 color = MaterialTheme.colorScheme.error,
-                fontSize = 14.sp
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold
             )
         }
     }

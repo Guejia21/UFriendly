@@ -31,10 +31,12 @@
     <string name="delete_label">Delete</string>
     <string name="no_subject_label">No Subject</string>
     <string name="due_date_prefix">Due Date: %1$s</string>
-    <string name="task_updated_label">Task updated succesfully!</string>
-    <string name="task_deleted_label">Task deleted succesfully!</string>
-    <string name="no_subjects_label">There is no subjects</string>
+    <string name="task_updated_label">Task updated successfully!</string>
+    <string name="task_deleted_label">Task deleted successfully!</string>
     <string name="loading">Loading</string>
     <string name="loading_failed">Failed to load books</string>
     <string name="no_books_found">No books found</string>
+    <string name="no_grades_label">There are no grades</string>
+    <string name="no_subjects_label">There are no subjects</string>
+    <string name="search_subjects_placeholder">Search subjects...</string>
 </resources>

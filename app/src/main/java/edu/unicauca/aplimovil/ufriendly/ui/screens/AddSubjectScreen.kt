@@ -68,7 +68,7 @@ fun AddSubjectScreen(
                     subject = Subject(
                         name=nameSubject,
                         teacher = nameTeacher,
-                        color = "",
+                        color = selectedColor?.let {"0x${it.value.toString(16)}"} ?: "",
                     ),
                     classSchedules = schedules.map { (day, startHour, endHour) ->
                         ClassSchedule(

@@ -14,5 +14,5 @@ data class GradeWithSubject (
         parentColumn = "subjectId",
         entityColumn = "id"
     )
-    val subject: Subject? //se puede nulo ya que solo probamos que se almacenen los datos en bd de una calificacion
+    val subject: Subject
 )

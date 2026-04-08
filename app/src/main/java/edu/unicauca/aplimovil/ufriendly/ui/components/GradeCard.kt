@@ -60,7 +60,7 @@ fun GradeRow(grade: GradeWithSubject) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = grade.subject?.name ?: "Unknown Subject", //esto por ahora, para ver si funciona la bd
+                text = grade.subject.name,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.scrim,
@@ -74,7 +74,7 @@ fun GradeRow(grade: GradeWithSubject) {
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = String.format("%.1f", grade.subject?.score ?: 0.0),
+                    text = String.format("%.1f", (grade.grade.weight*grade.grade.value)),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,)
@@ -103,7 +103,7 @@ fun GradeRow(grade: GradeWithSubject) {
                 modifier = Modifier.weight(1f)
             ) {
                 Text(text = "Weight:", fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Medium)
-                Text(text = "${grade.grade.weight*100}%", fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Medium)
+                Text(text = "${grade.grade.weight}", fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Medium)
             }
 
             // Calificación (Derecha)

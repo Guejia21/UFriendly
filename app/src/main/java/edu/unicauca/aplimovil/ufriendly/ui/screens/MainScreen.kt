@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import edu.unicauca.aplimovil.ufriendly.data.DashboardState
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
+import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectFullInfo
 import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
 import edu.unicauca.aplimovil.ufriendly.ui.components.BottomBar
 import edu.unicauca.aplimovil.ufriendly.ui.components.SubjectDashboard
@@ -25,7 +26,7 @@ import edu.unicauca.aplimovil.ufriendly.ui.theme.UFriendlyTheme
 @Composable
 fun MainScreen(
     state: DashboardState,
-    subjects: List<SubjectWithSchedules>,
+    subjects: List<SubjectFullInfo>,
     navController: NavHostController
 ) {
     GenericScreen(navController=navController)

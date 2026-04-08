@@ -21,11 +21,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import edu.unicauca.aplimovil.ufriendly.R
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
+import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectFullInfo
 import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
 
 @Composable
 fun SubjectDashboard(
-    subjects: List<SubjectWithSchedules>,
+    subjects: List<SubjectFullInfo>,
     onViewAllClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {

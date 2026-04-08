@@ -9,6 +9,7 @@ import androidx.room.Transaction
 import androidx.room.Update
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
 import edu.unicauca.aplimovil.ufriendly.data.entity.Task
+import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectFullInfo
 import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithGrades
 import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
 import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithTasks
@@ -50,6 +51,10 @@ interface SubjectDao {
     @Transaction
     @Query("SELECT id FROM subject ORDER BY id DESC LIMIT 1")
     fun getLastSubjectId(): Int
+
+    @Transaction
+    @Query("SELECT * FROM subject")
+    fun getAllSubjectsWithFullInfo(): Flow<List<SubjectFullInfo>>
 }
 
 

@@ -4,12 +4,16 @@ import edu.unicauca.aplimovil.ufriendly.data.dao.ClassScheduleDao
 import edu.unicauca.aplimovil.ufriendly.data.dao.SubjectDao
 import edu.unicauca.aplimovil.ufriendly.data.entity.ClassSchedule
 import edu.unicauca.aplimovil.ufriendly.data.entity.Subject
+import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectFullInfo
 import kotlinx.coroutines.flow.Flow
 import edu.unicauca.aplimovil.ufriendly.data.relation.SubjectWithSchedules
 
 class SubjectRepository(private val subjectDao: SubjectDao, private val classScheduleDao: ClassScheduleDao) {
     val allSubjects = subjectDao.getAllSubjects()
     val allSubjectsWithSchedules: Flow<List<SubjectWithSchedules>> = subjectDao.getSubjectsWithSchedules()
+
+    val allSubjectsFullInfo: Flow<List<SubjectFullInfo>> = subjectDao.getAllSubjectsWithFullInfo()
+
 
     suspend fun insert(subject: Subject) = subjectDao.insertSubject(subject)
     suspend fun insertSubjectWithSchedules(subject: Subject, schedules: List<ClassSchedule>) {
