@@ -39,10 +39,10 @@ class TaskRepository(
     private fun scheduleReminder(task: Task) {
         val dueDate = task.dueDate ?: return   // null-safe: don't schedule if no date
 
-        // TESTING: fire after 10 seconds instead of 24h before due date
-        //val delay = 10000L
+        // TESTING: fire after 20 seconds instead of 24h before due date
+        val delay = 20000L
         // PRODUCTION: uncomment this and remove the line above
-        val delay = (dueDate.time - TimeUnit.HOURS.toMillis(12)) - System.currentTimeMillis()
+        //val delay = (dueDate.time - TimeUnit.HOURS.toMillis(12)) - System.currentTimeMillis()
         if (delay <= 0) return
 
         val inputData = workDataOf(
