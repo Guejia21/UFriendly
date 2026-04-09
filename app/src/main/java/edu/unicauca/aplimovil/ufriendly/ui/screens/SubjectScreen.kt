@@ -43,9 +43,9 @@ fun SubjectScreen(
     val filteredSubjects = remember(subjects, mostrarCursando, textSearch) {
         subjects.filter { item ->
             val matchesStatus = if (mostrarCursando) {
-                item.subject.completionPercentage < 100
+                item.completionPercentage < 100
             } else {
-                item.subject.completionPercentage == 100
+                item.completionPercentage == 100
             }
             val matchesSearch = item.subject.name.contains(textSearch, ignoreCase = true)
             matchesStatus && matchesSearch
